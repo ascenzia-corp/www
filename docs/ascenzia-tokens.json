@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "name": "Ascenzia Design System",
+    "version": "1.0.0",
+    "description": "Design tokens — Dark-first, Navy+Gold, Telegraf, WCAG 2.2 AA",
+    "format": "Figma Variables / Style Dictionary compatible"
+  },
+  "color": {
+    "navy": {
+      "black":       { "value": "#0F1419", "type": "color", "description": "Deepest background, body" },
+      "dark":        { "value": "#12172B", "type": "color", "description": "Primary dark background" },
+      "DEFAULT":     { "value": "#1A202C", "type": "color", "description": "Secondary backgrounds, headers" },
+      "slate":       { "value": "#2D3748", "type": "color", "description": "Cards, elevated surfaces" },
+      "slate-light": { "value": "#4A5568", "type": "color", "description": "Borders, muted elements" }
+    },
+    "gold": {
+      "DEFAULT":     { "value": "#DDAC63", "type": "color", "description": "Primary CTA, highlights, titles on dark" },
+      "dark":        { "value": "#B8860B", "type": "color", "description": "Hover states, emphasis" },
+      "bronze":      { "value": "#8B6914", "type": "color", "description": "Deep accents, icons" },
+      "cream":       { "value": "#F5D89A", "type": "color", "description": "Light accent backgrounds, tags" },
+      "cream-light": { "value": "#FFF4D9", "type": "color", "description": "Subtle highlights, hover states on light" }
+    },
+    "neutral": {
+      "off-white":   { "value": "#EBEBEE", "type": "color", "description": "Light backgrounds, body text on dark" },
+      "light-gray":  { "value": "#DFDFE1", "type": "color", "description": "Borders, dividers" },
+      "slate-blue":  { "value": "#394E6C", "type": "color", "description": "Secondary text, icons" }
+    },
+    "semantic": {
+      "success":        { "value": "#22C55E", "type": "color", "description": "Confirmations, health OK" },
+      "success-muted":  { "value": "#16532B", "type": "color", "description": "Success background" },
+      "warning":        { "value": "#F59E0B", "type": "color", "description": "Alerts, attention" },
+      "warning-muted":  { "value": "#6B4106", "type": "color", "description": "Warning background" },
+      "error":          { "value": "#EF4444", "type": "color", "description": "Errors, kill-switch" },
+      "error-muted":    { "value": "#7F1D1D", "type": "color", "description": "Error background" },
+      "info":           { "value": "#3B82F6", "type": "color", "description": "Information, links" },
+      "info-muted":     { "value": "#1E3A5F", "type": "color", "description": "Info background" }
+    },
+    "data-viz": {
+      "teal":          { "value": "#52BEC0", "type": "color", "description": "Data visualization ONLY — never CTAs" }
+    },
+    "gradient": {
+      "surface":       { "value": "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)", "type": "gradient" },
+      "gold-shimmer":  { "value": "linear-gradient(135deg, #8B6914 0%, #DDAC63 50%, #F5D89A 100%)", "type": "gradient" },
+      "depth":         { "value": "linear-gradient(180deg, #0F1419 0%, #12172B 100%)", "type": "gradient" },
+      "hero-overlay":  { "value": "linear-gradient(180deg, transparent 0%, #0F1419 100%)", "type": "gradient" }
+    }
+  },
+  "typography": {
+    "font-family": {
+      "heading":  { "value": "'Telegraf', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif", "type": "fontFamily" },
+      "body":     { "value": "'Telegraf', 'Inter', system-ui, sans-serif", "type": "fontFamily" },
+      "mono":     { "value": "'JetBrains Mono', 'Fira Code', monospace", "type": "fontFamily" }
+    },
+    "scale": {
+      "display":  { "size": "72px", "lineHeight": "1.05", "weight": 700, "tracking": "-0.03em", "mobile": "40px" },
+      "h1":       { "size": "56px", "lineHeight": "1.1",  "weight": 700, "tracking": "-0.025em", "mobile": "32px" },
+      "h2":       { "size": "40px", "lineHeight": "1.15", "weight": 700, "tracking": "-0.02em", "mobile": "28px" },
+      "h3":       { "size": "32px", "lineHeight": "1.2",  "weight": 600, "tracking": "-0.015em", "mobile": "24px" },
+      "h4":       { "size": "24px", "lineHeight": "1.3",  "weight": 600, "tracking": "-0.01em", "mobile": "20px" },
+      "h5":       { "size": "20px", "lineHeight": "1.4",  "weight": 500, "tracking": "0", "mobile": "18px" },
+      "body-lg":  { "size": "18px", "lineHeight": "1.6",  "weight": 400, "tracking": "0.01em", "mobile": "16px" },
+      "body":     { "size": "16px", "lineHeight": "1.6",  "weight": 400, "tracking": "0.01em", "mobile": "15px" },
+      "caption":  { "size": "13px", "lineHeight": "1.5",  "weight": 400, "tracking": "0.02em", "mobile": "12px" }
+    }
+  },
+  "spacing": {
+    "0":  { "value": "0px" },
+    "1":  { "value": "4px" },
+    "2":  { "value": "8px" },
+    "3":  { "value": "12px" },
+    "4":  { "value": "16px" },
+    "5":  { "value": "20px" },
+    "6":  { "value": "24px" },
+    "8":  { "value": "32px" },
+    "10": { "value": "40px" },
+    "12": { "value": "48px" },
+    "16": { "value": "64px" },
+    "20": { "value": "80px" },
+    "24": { "value": "96px" },
+    "32": { "value": "128px" }
+  },
+  "radius": {
+    "none": { "value": "0px" },
+    "sm":   { "value": "4px" },
+    "md":   { "value": "8px" },
+    "lg":   { "value": "12px" },
+    "xl":   { "value": "16px" },
+    "full": { "value": "9999px" }
+  },
+  "shadow": {
+    "sm":         { "value": "0 1px 2px rgba(0,0,0,0.3)" },
+    "md":         { "value": "0 4px 12px rgba(0,0,0,0.4)" },
+    "lg":         { "value": "0 8px 32px rgba(0,0,0,0.5)" },
+    "xl":         { "value": "0 16px 48px rgba(0,0,0,0.6)" },
+    "glow":       { "value": "0 0 24px rgba(221,172,99,0.15)" },
+    "glow-strong":{ "value": "0 0 48px rgba(221,172,99,0.25)" }
+  },
+  "motion": {
+    "fast":   { "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)", "description": "Hover, focus, micro-interactions" },
+    "base":   { "value": "250ms cubic-bezier(0.4, 0, 0.2, 1)", "description": "Standard transitions" },
+    "slow":   { "value": "400ms cubic-bezier(0.4, 0, 0.2, 1)", "description": "Page transitions, modals" },
+    "spring": { "value": "500ms cubic-bezier(0.34, 1.56, 0.64, 1)", "description": "Playful entrances, bounces" }
+  },
+  "breakpoint": {
+    "sm":  { "value": "640px" },
+    "md":  { "value": "768px" },
+    "lg":  { "value": "1024px" },
+    "xl":  { "value": "1280px" },
+    "2xl": { "value": "1536px" }
+  },
+  "grid": {
+    "columns":  { "value": 12 },
+    "gutter":   { "value": "24px" },
+    "max-width":{ "value": "1280px" }
+  }
+}
