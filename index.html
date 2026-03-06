@@ -4,721 +4,618 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ascenzia — La Tour de Contrôle de vos Agents IA</title>
-<meta name="description" content="L'infrastructure de contrôle souveraine qui agrège, observe, sécurise et pilote tous vos agents IA. Audit Tour de Contrôle en 5 jours — 4 900 € HT.">
-<link rel="preconnect" href="https://fonts.cdnfonts.com">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="L'infrastructure de contrôle souveraine qui agrège, observe, sécurise et pilote tous vos agents IA. Audit Tour de Contrôle en 5 jours.">
+<link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link href="https://fonts.cdnfonts.com/css/telegraf" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══ RESET & BASE ═══ */
+/* ── RESET & BASE ──────────────────────────────── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Telegraf','Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0F1419;color:#EBEBEE;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6}
-::selection{background:#DDAC63;color:#0F1419}
+:root{
+  --navy-black:#0F1419;--navy-dark:#12172B;--navy:#1A202C;--navy-slate:#2D3748;--navy-slate-light:#4A5568;
+  --gold:#DDAC63;--gold-dark:#B8860B;--gold-bronze:#8B6914;--gold-cream:#F5D89A;
+  --off-white:#EBEBEE;--light-gray:#DFDFE1;--slate-blue:#394E6C;
+  --teal:#52BEC0;--success:#22C55E;--error:#EF4444;
+  --font:'Telegraf','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono','Fira Code',monospace;
+  --max-w:1280px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--font);background:var(--navy-black);color:var(--off-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--gold);color:var(--navy-black)}
 ::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:#12172B}
-::-webkit-scrollbar-thumb{background:#4A5568;border-radius:3px}
+::-webkit-scrollbar-track{background:var(--navy-dark)}
+::-webkit-scrollbar-thumb{background:var(--navy-slate-light);border-radius:3px}
 img,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 
-/* ═══ TOKENS ═══ */
-:root{
-  --navy-black:#0F1419;--navy-dark:#12172B;--navy:#1A202C;--navy-slate:#2D3748;--navy-slate-light:#4A5568;
-  --gold:#DDAC63;--gold-dark:#B8860B;--gold-bronze:#8B6914;--gold-cream:#F5D89A;--gold-cream-light:#FFF4D9;
-  --off-white:#EBEBEE;--light-gray:#DFDFE1;--slate-blue:#394E6C;
-  --success:#22C55E;--warning:#F59E0B;--error:#EF4444;--info:#3B82F6;--teal:#52BEC0;
-  --font-heading:'Telegraf','Inter',-apple-system,sans-serif;
-  --font-mono:'JetBrains Mono','Fira Code',monospace;
-  --motion-fast:150ms cubic-bezier(0.4,0,0.2,1);
-  --motion-base:250ms cubic-bezier(0.4,0,0.2,1);
-  --motion-slow:400ms cubic-bezier(0.4,0,0.2,1);
-  --shadow-md:0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg:0 8px 32px rgba(0,0,0,0.5);
-  --shadow-glow:0 0 24px rgba(221,172,99,0.15);
-  --max-w:1280px;
-}
+/* ── TYPOGRAPHY ────────────────────────────────── */
+.display{font-size:clamp(40px,6vw,72px);font-weight:700;line-height:1.05;letter-spacing:-0.03em}
+.h1{font-size:clamp(32px,4.5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-0.025em}
+.h2{font-size:clamp(28px,3.5vw,40px);font-weight:700;line-height:1.15;letter-spacing:-0.02em}
+.h3{font-size:clamp(24px,2.5vw,32px);font-weight:600;line-height:1.2;letter-spacing:-0.015em}
+.h4{font-size:clamp(20px,2vw,24px);font-weight:600;line-height:1.3;letter-spacing:-0.01em}
+.body-lg{font-size:clamp(16px,1.3vw,18px);line-height:1.6;letter-spacing:0.01em}
+.body{font-size:clamp(15px,1.1vw,16px);line-height:1.6;letter-spacing:0.01em}
+.caption{font-size:13px;line-height:1.5;letter-spacing:0.02em}
+.mono{font-family:var(--mono)}
+.text-gold{color:var(--gold)}
+.text-slate{color:var(--slate-blue)}
+.text-muted{color:var(--navy-slate-light)}
 
-/* ═══ LAYOUT ═══ */
+/* ── LAYOUT ────────────────────────────────────── */
 .container{max-width:var(--max-w);margin:0 auto;padding:0 32px}
 @media(max-width:768px){.container{padding:0 20px}}
+.section{padding:120px 0}
+@media(max-width:768px){.section{padding:80px 0}}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media(max-width:1024px){.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.grid-2,.grid-4{grid-template-columns:1fr}}
 
-/* ═══ TYPOGRAPHY ═══ */
-h1{font-size:56px;line-height:1.1;font-weight:700;letter-spacing:-0.025em}
-h2{font-size:40px;line-height:1.15;font-weight:700;letter-spacing:-0.02em}
-h3{font-size:32px;line-height:1.2;font-weight:600;letter-spacing:-0.015em}
-h4{font-size:24px;line-height:1.3;font-weight:600;letter-spacing:-0.01em}
-@media(max-width:768px){
-  h1{font-size:32px}
-  h2{font-size:28px}
-  h3{font-size:24px}
-  h4{font-size:20px}
-}
+/* ── COMPONENTS ────────────────────────────────── */
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.15em}
+.tag-gold{background:rgba(221,172,99,0.1);border:1px solid rgba(221,172,99,0.2);color:var(--gold)}
+.tag-teal{background:rgba(82,190,192,0.1);border:1px solid rgba(82,190,192,0.2);color:var(--teal)}
+.card{padding:32px;background:var(--navy-dark);border-radius:16px;border:1px solid rgba(45,55,72,0.4);transition:border-color 250ms ease,box-shadow 250ms ease}
+.card:hover{border-color:rgba(221,172,99,0.2);box-shadow:0 0 24px rgba(221,172,99,0.05)}
+.card-glow{border-color:rgba(221,172,99,0.2);box-shadow:0 0 24px rgba(221,172,99,0.08)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:9999px;font-family:var(--font);font-size:16px;font-weight:600;border:none;cursor:pointer;transition:all 250ms ease;white-space:nowrap}
+.btn-gold{background:var(--gold);color:var(--navy-black)}
+.btn-gold:hover{background:var(--gold-dark);box-shadow:0 0 32px rgba(221,172,99,0.3)}
+.btn-ghost{background:transparent;color:var(--off-white);border:1px solid var(--navy-slate-light)}
+.btn-ghost:hover{border-color:var(--off-white);background:rgba(235,235,238,0.05)}
+.link-arrow{color:var(--gold);font-weight:500;display:inline-flex;align-items:center;gap:4px;transition:gap 250ms ease}
+.link-arrow:hover{gap:8px}
+.link-arrow::after{content:'→'}
 
-/* ═══ COMPONENTS ═══ */
-.surtitre{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.15em;font-family:var(--font-mono);margin-bottom:16px;display:inline-block}
-.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(221,172,99,0.08);border:1px solid rgba(221,172,99,0.2);color:var(--gold)}
-.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:var(--gold);color:var(--navy-black);font-size:16px;font-weight:700;border-radius:12px;border:none;cursor:pointer;transition:all var(--motion-fast);font-family:inherit;letter-spacing:-0.01em}
-.btn-primary:hover{background:var(--gold-dark);transform:translateY(-2px);box-shadow:var(--shadow-glow)}
-.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:transparent;color:var(--off-white);font-size:16px;font-weight:600;border-radius:12px;border:1px solid var(--navy-slate-light);cursor:pointer;transition:all var(--motion-fast);font-family:inherit}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.card{padding:28px;background:var(--navy-dark);border-radius:16px;border:1px solid rgba(45,55,72,0.4)}
-.card--glow{border-color:rgba(221,172,99,0.2);box-shadow:var(--shadow-glow)}
+/* ── NAVIGATION ────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(15,20,25,0.8);border-bottom:1px solid rgba(45,55,72,0.3);transition:all 250ms ease}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:14px;color:var(--slate-blue);transition:color 150ms ease}
+.nav-links a:hover{color:var(--off-white)}
+.nav-cta{padding:10px 20px;font-size:14px}
+.nav-logo svg{height:32px;width:auto}
+@media(max-width:768px){.nav-links{display:none}}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--off-white);cursor:pointer}
+@media(max-width:768px){.mobile-menu-btn{display:block}}
 
-/* ═══ ANIMATIONS ═══ */
+/* ── HERO ──────────────────────────────────────── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,var(--navy-dark) 0%,var(--navy-black) 70%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(221,172,99,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(221,172,99,0.03) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%)}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.hero-surtitre{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:24px;font-family:var(--mono)}
+.hero-headline{margin-bottom:24px}
+.hero-sub{font-size:clamp(16px,1.5vw,20px);color:var(--slate-blue);line-height:1.6;max-width:600px;margin-bottom:40px}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+.hero-glow{position:absolute;top:20%;right:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(221,172,99,0.06) 0%,transparent 70%);border-radius:50%;pointer-events:none;animation:float 6s ease-in-out infinite}
+
+/* ── PILLAR SECTION ────────────────────────────── */
+.pillar-card{padding:40px 32px;position:relative;overflow:hidden}
+.pillar-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:0;transition:opacity 400ms ease}
+.pillar-card:hover::before{opacity:1}
+.pillar-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:24px}
+.pillar-icon-agreger{background:rgba(59,130,246,0.15);color:#3B82F6}
+.pillar-icon-observer{background:rgba(82,190,192,0.15);color:var(--teal)}
+.pillar-icon-securiser{background:rgba(239,68,68,0.15);color:var(--error)}
+.pillar-icon-piloter{background:rgba(221,172,99,0.15);color:var(--gold)}
+.pillar-num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.15em;margin-bottom:12px}
+.pillar-title{margin-bottom:12px}
+.pillar-desc{color:var(--slate-blue);line-height:1.7;margin-bottom:20px}
+.pillar-features{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pillar-features li{font-size:14px;color:var(--off-white);display:flex;align-items:flex-start;gap:8px}
+.pillar-features li::before{content:'›';color:var(--gold);font-weight:700;flex-shrink:0}
+
+/* ── DASHBOARD PREVIEW ─────────────────────────── */
+.dash-preview{background:var(--navy-dark);border-radius:16px;border:1px solid rgba(45,55,72,0.5);padding:32px;position:relative;overflow:hidden}
+.dash-bar{display:flex;gap:8px;margin-bottom:24px}
+.dash-dot{width:10px;height:10px;border-radius:50%}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:768px){.dash-grid{grid-template-columns:1fr}}
+.dash-stat{background:var(--navy);border-radius:12px;padding:20px;border:1px solid rgba(45,55,72,0.4)}
+.dash-stat-value{font-size:32px;font-weight:700;margin-bottom:4px}
+.dash-stat-label{font-size:13px;color:var(--slate-blue)}
+.dash-agents{background:var(--navy);border-radius:12px;padding:20px;border:1px solid rgba(45,55,72,0.4)}
+.agent-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(45,55,72,0.3)}
+.agent-row:last-child{border-bottom:none}
+.agent-name{font-size:14px;font-weight:500}
+.agent-status{display:flex;align-items:center;gap:6px;font-size:13px}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-ok{background:var(--success)}
+.status-warn{background:#F59E0B}
+
+/* ── DOUBLE DETTE ──────────────────────────────── */
+.dette-card{position:relative;padding-left:24px}
+.dette-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px}
+.dette-tech::before{background:var(--error)}
+.dette-secu::before{background:#F59E0B}
+
+/* ── MARKET STATS ──────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media(max-width:1024px){.stat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.stat-grid{grid-template-columns:1fr}}
+.stat-card{text-align:center;padding:40px 24px}
+.stat-number{font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--gold);line-height:1.1;margin-bottom:8px}
+.stat-label{font-size:15px;color:var(--slate-blue);line-height:1.5}
+
+/* ── CTA BAND ──────────────────────────────────── */
+.cta-band{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-slate) 100%);border-radius:24px;padding:80px 64px;text-align:center;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;inset:-50%;background:radial-gradient(circle at center,rgba(221,172,99,0.08) 0%,transparent 50%);pointer-events:none}
+@media(max-width:768px){.cta-band{padding:48px 24px}}
+
+/* ── FOOTER ────────────────────────────────────── */
+.footer{padding:64px 0 32px;border-top:1px solid rgba(45,55,72,0.3)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+.footer-col h4{font-size:13px;font-weight:600;color:var(--off-white);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px}
+.footer-col a{display:block;font-size:14px;color:var(--slate-blue);margin-bottom:10px;transition:color 150ms ease}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(45,55,72,0.2);font-size:13px;color:var(--navy-slate-light)}
+@media(max-width:768px){.footer-bottom{flex-direction:column;gap:12px;text-align:center}}
+.footer-badges{display:flex;gap:12px}
+.footer-badge{padding:4px 10px;border-radius:6px;background:rgba(45,55,72,0.3);font-size:11px;font-family:var(--mono);color:var(--slate-blue)}
+
+/* ── ANIMATIONS ────────────────────────────────── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
-@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-@keyframes gridPulse{0%,100%{opacity:0.03}50%{opacity:0.08}}
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
-.fade-up-delay-1{transition-delay:0.1s}
-.fade-up-delay-2{transition-delay:0.2s}
-.fade-up-delay-3{transition-delay:0.3s}
-.fade-up-delay-4{transition-delay:0.4s}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.fade-in-delay-1{transition-delay:0.1s}
+.fade-in-delay-2{transition-delay:0.2s}
+.fade-in-delay-3{transition-delay:0.3s}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1;transform:none;transition:none}.hero-glow{animation:none}}
 
-/* ═══ NAV ═══ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:all var(--motion-base)}
-.nav--scrolled{background:rgba(15,20,25,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(45,55,72,0.3)}
-.nav__inner{display:flex;align-items:center;justify-content:space-between}
-.nav__links{display:flex;gap:32px;align-items:center}
-.nav__link{font-size:14px;font-weight:500;color:var(--slate-blue);transition:color var(--motion-fast)}
-.nav__link:hover{color:var(--gold)}
-.nav__cta{padding:10px 24px;font-size:14px}
-.nav__mobile{display:none;background:none;border:none;color:var(--off-white);cursor:pointer;padding:8px}
-@media(max-width:768px){
-  .nav__links{display:none}
-  .nav__links--open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(15,20,25,0.98);backdrop-filter:blur(12px);padding:24px 32px;gap:20px;border-bottom:1px solid var(--navy-slate)}
-  .nav__mobile{display:block}
-}
+/* ── SECTION TITLES ────────────────────────────── */
+.section-surtitre{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:12px;font-family:var(--mono)}
+.section-title{margin-bottom:16px}
+.section-sub{color:var(--slate-blue);max-width:640px;line-height:1.65}
+.section-header{margin-bottom:64px}
+.section-header-center{text-align:center;margin-bottom:64px}
+.section-header-center .section-sub{margin:0 auto}
 
-/* ═══ HERO ═══ */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
-.hero__bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,#12172B 0%,#0F1419 70%)}
-.hero__grid{position:absolute;inset:0;background-image:radial-gradient(rgba(221,172,99,0.06) 1px,transparent 1px);background-size:40px 40px;animation:gridPulse 6s ease infinite}
-.hero__gradient{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,#0F1419)}
-.hero__content{position:relative;z-index:2;max-width:720px}
-.hero__headline{color:var(--off-white);margin-bottom:24px}
-.hero__headline span{color:var(--gold)}
-.hero__sub{font-size:18px;color:var(--slate-blue);line-height:1.7;margin-bottom:40px;max-width:560px}
-.hero__ctas{display:flex;gap:16px;flex-wrap:wrap}
-.hero__stats{position:relative;z-index:2;display:flex;gap:48px;margin-top:64px;padding-top:32px;border-top:1px solid rgba(45,55,72,0.3)}
-.hero__stat-value{font-size:32px;font-weight:700;color:var(--gold);font-family:var(--font-mono)}
-.hero__stat-label{font-size:13px;color:var(--slate-blue);margin-top:4px}
-@media(max-width:768px){
-  .hero{min-height:auto;padding:100px 0 60px}
-  .hero__stats{flex-wrap:wrap;gap:24px}
-  .hero__stat-value{font-size:24px}
-}
+/* ── SOVEREIGN BADGES ──────────────────────────── */
+.sovereign-bar{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.sovereign-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);font-size:12px;font-weight:500;color:var(--success);font-family:var(--mono)}
 
-/* ═══ SECTION DOUBLE DETTE ═══ */
-.dette{padding:120px 0;position:relative}
-.dette__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
-.dette__card{padding:32px;border-radius:16px;border:1px solid}
-.dette__card--tech{background:rgba(239,68,68,0.04);border-color:rgba(239,68,68,0.15)}
-.dette__card--secu{background:rgba(245,158,11,0.04);border-color:rgba(245,158,11,0.15)}
-.dette__card h4{margin-bottom:16px}
-.dette__card ul{list-style:none;display:flex;flex-direction:column;gap:12px}
-.dette__card li{font-size:15px;color:var(--slate-blue);padding-left:24px;position:relative;line-height:1.6}
-.dette__card li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%}
-.dette__card--tech li::before{background:var(--error)}
-.dette__card--secu li::before{background:var(--warning)}
-.dette__transition{text-align:center;margin-top:48px;font-size:20px;font-weight:600;color:var(--gold)}
-@media(max-width:768px){.dette__grid{grid-template-columns:1fr}}
-
-/* ═══ SECTION 4 PILIERS ═══ */
-.piliers{padding:120px 0;background:var(--navy-dark)}
-.piliers__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:16px;overflow:hidden;margin-top:48px}
-.pilier{padding:32px;background:var(--navy-black);transition:all var(--motion-base);position:relative}
-.pilier:hover{background:var(--navy)}
-.pilier__icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
-.pilier__num{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;font-family:var(--font-mono);margin-bottom:12px}
-.pilier h4{color:var(--off-white);margin-bottom:8px;font-size:22px}
-.pilier__desc{font-size:14px;color:var(--slate-blue);line-height:1.7;margin-bottom:20px}
-.pilier__features{list-style:none;display:flex;flex-direction:column;gap:8px}
-.pilier__features li{font-size:13px;color:var(--slate-blue);padding-left:16px;position:relative;line-height:1.5}
-.pilier__features li::before{content:'→';position:absolute;left:0;color:var(--gold)}
-@media(max-width:1024px){.piliers__grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.piliers__grid{grid-template-columns:1fr}}
-
-/* ═══ DASHBOARD PREVIEW ═══ */
-.dashboard{padding:120px 0;position:relative;overflow:hidden}
-.dashboard__mockup{margin-top:48px;border-radius:16px;border:1px solid rgba(221,172,99,0.15);background:var(--navy-dark);overflow:hidden;box-shadow:var(--shadow-lg),var(--shadow-glow)}
-.dashboard__topbar{display:flex;align-items:center;gap:8px;padding:12px 20px;background:var(--navy);border-bottom:1px solid var(--navy-slate)}
-.dashboard__dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--navy-slate-light)}
-.dashboard__dot--r{border-color:var(--error)}
-.dashboard__dot--y{border-color:var(--warning)}
-.dashboard__dot--g{border-color:var(--success)}
-.dashboard__content{padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
-.dashboard__stat{padding:24px;background:var(--navy);border-radius:12px;border:1px solid rgba(45,55,72,0.4)}
-.dashboard__stat-val{font-size:36px;font-weight:700;font-family:var(--font-mono);margin-bottom:4px}
-.dashboard__stat-lbl{font-size:13px;color:var(--slate-blue)}
-.dashboard__agents{grid-column:1/-1;padding:24px;background:var(--navy);border-radius:12px;border:1px solid rgba(45,55,72,0.4)}
-.dashboard__agents h5{font-size:14px;font-weight:600;color:var(--slate-blue);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.08em}
-.agent-row{display:grid;grid-template-columns:1fr 100px 80px 80px;gap:16px;padding:12px 0;border-bottom:1px solid rgba(45,55,72,0.2);align-items:center;font-size:14px}
-.agent-row:last-child{border:none}
-.agent-name{font-weight:500;color:var(--off-white)}
-.agent-status{font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;text-align:center}
-.agent-status--ok{background:rgba(34,197,94,0.1);color:var(--success)}
-.agent-status--warn{background:rgba(245,158,11,0.1);color:var(--warning)}
-.agent-score{font-family:var(--font-mono);font-weight:500}
-.agent-latency{font-family:var(--font-mono);color:var(--slate-blue);font-size:13px}
-@media(max-width:768px){
-  .dashboard__content{grid-template-columns:1fr}
-  .agent-row{grid-template-columns:1fr auto}
-  .agent-latency,.agent-score{display:none}
-}
-
-/* ═══ SOCIAL PROOF / STATS ═══ */
-.stats{padding:100px 0;background:linear-gradient(180deg,var(--navy-black) 0%,var(--navy-dark) 100%)}
-.stats__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:16px;overflow:hidden;margin-top:48px}
-.stats__item{padding:32px;background:var(--navy-black);text-align:center}
-.stats__value{font-size:40px;font-weight:700;color:var(--gold);font-family:var(--font-mono);margin-bottom:8px}
-.stats__label{font-size:14px;color:var(--slate-blue);line-height:1.5}
-.stats__source{text-align:center;margin-top:24px;font-size:12px;color:var(--navy-slate-light);font-family:var(--font-mono)}
-@media(max-width:768px){
-  .stats__grid{grid-template-columns:repeat(2,1fr)}
-  .stats__value{font-size:28px}
-}
-
-/* ═══ AUDIT (OFFRE) ═══ */
-.audit{padding:120px 0;position:relative}
-.audit__header{text-align:center;max-width:640px;margin:0 auto 64px}
-.audit__price{font-size:24px;font-weight:700;color:var(--gold);margin-top:16px}
-.audit__timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;border-radius:16px;overflow:hidden;margin-bottom:48px}
-.audit__day{padding:24px;background:var(--navy-dark);transition:all var(--motion-base)}
-.audit__day:hover{background:var(--navy)}
-.audit__day-num{font-size:12px;font-weight:600;color:var(--gold);font-family:var(--font-mono);margin-bottom:8px}
-.audit__day-title{font-size:16px;font-weight:600;color:var(--off-white);margin-bottom:8px}
-.audit__day-desc{font-size:13px;color:var(--slate-blue);line-height:1.6}
-.audit__livrables{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
-.audit__livrables-list{list-style:none;display:flex;flex-direction:column;gap:16px}
-.audit__livrables-list li{font-size:15px;color:var(--off-white);padding-left:28px;position:relative;line-height:1.6}
-.audit__livrables-list li::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700}
-.audit__guarantee{padding:32px;background:linear-gradient(135deg,rgba(221,172,99,0.05),rgba(221,172,99,0.02));border:1px solid rgba(221,172,99,0.2);border-radius:16px}
-.audit__guarantee-text{font-size:18px;font-weight:600;color:var(--gold);line-height:1.6;font-style:italic}
-@media(max-width:1024px){.audit__timeline{grid-template-columns:1fr}}
-@media(max-width:768px){.audit__livrables{grid-template-columns:1fr}}
-
-/* ═══ SOUVERAINETÉ ═══ */
-.souv{padding:120px 0;background:var(--navy-dark)}
-.souv__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.souv__item{padding:28px;background:var(--navy-black);border-radius:16px;border:1px solid rgba(45,55,72,0.3);transition:all var(--motion-base)}
-.souv__item:hover{border-color:rgba(221,172,99,0.2)}
-.souv__item-icon{font-size:24px;margin-bottom:16px}
-.souv__item h4{font-size:18px;margin-bottom:8px}
-.souv__item p{font-size:14px;color:var(--slate-blue);line-height:1.6}
-@media(max-width:768px){.souv__grid{grid-template-columns:1fr}}
-
-/* ═══ CTA BAND ═══ */
-.cta-band{padding:100px 0;text-align:center;position:relative;overflow:hidden}
-.cta-band__bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy-dark),var(--navy));opacity:0.8}
-.cta-band__glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(221,172,99,0.06) 0%,transparent 70%)}
-.cta-band__content{position:relative;z-index:2;max-width:640px;margin:0 auto}
-.cta-band h2{margin-bottom:16px}
-.cta-band p{font-size:18px;color:var(--slate-blue);margin-bottom:40px;line-height:1.7}
-.cta-band__buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-
-/* ═══ FOOTER ═══ */
-.footer{padding:48px 0;border-top:1px solid rgba(45,55,72,0.2)}
-.footer__inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
-.footer__left{display:flex;flex-direction:column;gap:8px}
-.footer__copy{font-size:13px;color:var(--navy-slate-light)}
-.footer__links{display:flex;gap:24px}
-.footer__link{font-size:13px;color:var(--slate-blue);transition:color var(--motion-fast)}
-.footer__link:hover{color:var(--gold)}
-.footer__badges{display:flex;gap:12px;align-items:center}
-.footer__badge{font-size:11px;font-weight:600;padding:6px 14px;border-radius:20px;border:1px solid rgba(45,55,72,0.4);color:var(--slate-blue);font-family:var(--font-mono)}
+/* ── OFFER SECTION ─────────────────────────────── */
+.offer-card{display:flex;flex-direction:column;height:100%}
+.offer-price{font-size:28px;font-weight:700;color:var(--gold);margin:16px 0 8px}
+.offer-type{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px}
+.offer-features{list-style:none;display:flex;flex-direction:column;gap:8px;flex-grow:1;margin-bottom:24px}
+.offer-features li{font-size:14px;color:var(--off-white);display:flex;align-items:flex-start;gap:8px}
+.offer-features li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0}
 </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
+<!-- ═══════════════════════════════════════════════ -->
+<!--  NAVIGATION                                    -->
+<!-- ═══════════════════════════════════════════════ -->
 <nav class="nav" id="nav">
-  <div class="container nav__inner">
-    <a href="#" aria-label="Ascenzia">
-      <svg xmlns="http://www.w3.org/2000/svg" width="160" height="30" viewBox="0 0 464 89" fill="none">
-        <mask id="mf0" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="27" y="0" width="86" height="89"><path d="M27.5 0.297H112.922V88.693H27.5V0.297Z" fill="white"/></mask>
-        <g mask="url(#mf0)"><path d="M49.307 29.109L28.037 86.063C27.516 87.453 28.542 88.927 30.021 88.927H48.115C49.016 88.927 49.818 88.359 50.115 87.516L55.167 73.214L61.281 54.896C61.427 54.464 61.427 53.995 61.287 53.563L53.313 29.193C52.688 27.287 50.005 27.229 49.307 29.109ZM79.344 0.292H63.203C61.74 0.292 60.719 1.734 61.198 3.109L70.26 29.245L70.271 29.208L85.146 73.214L90.302 87.526C90.604 88.37 91.406 88.927 92.297 88.927H110.839C112.323 88.927 113.349 87.453 112.828 86.063L81.328 1.677C81.021 0.844 80.229 0.292 79.344 0.292Z" fill="white"/></g>
-        <path d="M143.725 88.063C139.736 88.063 135.819 87.375 131.975 86L128.309 71.521C130.694 73.469 133.147 75.016 135.663 76.167C138.189 77.323 140.954 77.896 143.954 77.896C146.34 77.896 148.194 77.458 149.517 76.583C150.835 75.708 151.496 74.5 151.496 72.958V72.792C151.496 72.042 151.355 71.386 151.079 70.813C150.814 70.245 150.293 69.708 149.517 69.208C148.736 68.708 147.663 68.208 146.288 67.708C144.923 67.208 143.147 66.688 140.954 66.146C138.314 65.495 135.918 64.771 133.767 63.979C131.626 63.177 129.809 62.188 128.309 61.021C126.809 59.844 125.647 58.386 124.829 56.646C124.006 54.896 123.6 52.724 123.6 50.125V49.979C123.6 47.594 124.043 45.438 124.934 43.521C125.835 41.594 127.1 39.932 128.725 38.542C130.35 37.141 132.277 36.063 134.517 35.313C136.767 34.563 139.236 34.188 141.934 34.188C145.767 34.188 149.288 34.766 152.496 35.917C155.715 37.073 158.673 38.719 161.371 40.854L155.392 49.542C153.043 47.948 150.746 46.688 148.496 45.771C146.256 44.844 144.017 44.375 141.767 44.375C139.527 44.375 137.85 44.813 136.725 45.688C135.6 46.552 135.038 47.636 135.038 48.938V49.083C135.038 49.932 135.194 50.667 135.517 51.292C135.85 51.917 136.439 52.479 137.288 52.979C138.131 53.479 139.293 53.953 140.767 54.396C142.236 54.844 144.09 55.365 146.329 55.958C148.98 56.667 151.34 57.458 153.413 58.333C155.48 59.198 157.225 60.24 158.642 61.458C160.069 62.682 161.147 64.12 161.871 65.771C162.59 67.412 162.954 69.375 162.954 71.667V71.833C162.954 74.417 162.475 76.724 161.517 78.75C160.569 80.766 159.251 82.458 157.559 83.833C155.861 85.208 153.84 86.261 151.496 86.979C149.147 87.698 146.559 88.063 143.725 88.063Z" fill="white"/>
-        <path d="M228.201 34.938H267.701V45.188H239.639V55.813H264.326V66.063H239.639V77.063H268.076V87.313H228.201V34.938Z" fill="white"/>
-        <path d="M197.505 88.208C193.672 88.208 190.109 87.511 186.818 86.125C183.526 84.724 180.677 82.813 178.276 80.396C175.886 77.979 174.016 75.125 172.672 71.833C171.323 68.542 170.651 65.021 170.651 61.271V61.125C170.651 57.391 171.323 53.891 172.672 50.625C174.016 47.349 175.886 44.479 178.276 42.021C180.677 39.552 183.547 37.604 186.88 36.188C190.224 34.761 193.922 34.042 197.964 34.042C200.406 34.042 202.636 34.245 204.651 34.646C206.677 35.052 208.511 35.599 210.151 36.292C211.802 36.99 213.323 37.833 214.714 38.833C216.115 39.833 217.412 40.932 218.609 42.125L211.276 50.583C209.234 48.74 207.151 47.292 205.026 46.25C202.912 45.198 200.531 44.667 197.88 44.667C195.682 44.667 193.651 45.094 191.776 45.938C189.912 46.787 188.307 47.958 186.964 49.458C185.615 50.958 184.568 52.698 183.818 54.667C183.068 56.625 182.693 58.729 182.693 60.979V61.125C182.693 63.375 183.068 65.5 183.818 67.5C184.568 69.49 185.599 71.229 186.922 72.729C188.255 74.219 189.849 75.396 191.714 76.271C193.589 77.146 195.641 77.583 197.88 77.583C200.88 77.583 203.412 77.037 205.484 75.938C207.552 74.844 209.609 73.349 211.651 71.458L218.984 78.854C217.636 80.302 216.24 81.599 214.797 82.75C213.349 83.906 211.766 84.891 210.047 85.708C208.323 86.531 206.443 87.146 204.401 87.563C202.359 87.99 200.057 88.208 197.505 88.208Z" fill="white"/>
-        <path d="M278.33 34.938H288.955L313.476 67.188V34.938H324.851V87.313H315.059L289.684 54.021V87.313H278.33V34.938Z" fill="white"/>
-        <path d="M335.854 78.563L364.666 45.042H336.749V34.938H379.479V43.688L350.666 77.208H379.479V87.313H335.854V78.563Z" fill="white"/>
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo" aria-label="Ascenzia">
+      <svg xmlns="http://www.w3.org/2000/svg" width="140" height="27" viewBox="0 0 464 89" fill="none">
+        <mask id="n0" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="27" y="0" width="86" height="89"><path d="M27.5.297H112.922V88.693H27.5V.297Z" fill="#fff"/></mask>
+        <g mask="url(#n0)"><path d="M49.307 29.109L28.037 86.063C27.516 87.453 28.542 88.927 30.021 88.927H48.115C49.016 88.927 49.818 88.359 50.115 87.516L55.167 73.214L61.281 54.896C61.427 54.464 61.427 53.995 61.287 53.563L53.313 29.193C52.688 27.287 50.005 27.229 49.307 29.109ZM79.344.292H63.203C61.74.292 60.719 1.734 61.198 3.109L70.26 29.245 70.271 29.208 85.146 73.214 90.302 87.526C90.604 88.37 91.406 88.927 92.297 88.927H110.839C112.323 88.927 113.349 87.453 112.828 86.063L81.328 1.677C81.021.844 80.229.292 79.344.292Z" fill="#fff"/></g>
+        <path d="M143.725 88.063C139.736 88.063 135.819 87.375 131.975 86L128.309 71.521C130.694 73.469 133.147 75.016 135.663 76.167 138.189 77.323 140.954 77.896 143.954 77.896 146.34 77.896 148.194 77.458 149.517 76.583 150.835 75.708 151.496 74.5 151.496 72.958V72.792C151.496 72.042 151.355 71.386 151.079 70.813 150.814 70.245 150.293 69.708 149.517 69.208 148.736 68.708 147.663 68.208 146.288 67.708 144.923 67.208 143.147 66.688 140.954 66.146 138.314 65.495 135.918 64.771 133.767 63.979 131.626 63.177 129.809 62.188 128.309 61.021 126.809 59.844 125.647 58.386 124.829 56.646 124.006 54.896 123.6 52.724 123.6 50.125V49.979C123.6 47.594 124.043 45.438 124.934 43.521 125.835 41.594 127.1 39.932 128.725 38.542 130.35 37.141 132.277 36.063 134.517 35.313 136.767 34.563 139.236 34.188 141.934 34.188 145.767 34.188 149.288 34.766 152.496 35.917 155.715 37.073 158.673 38.719 161.371 40.854L155.392 49.542C153.043 47.948 150.746 46.688 148.496 45.771 146.256 44.844 144.017 44.375 141.767 44.375 139.527 44.375 137.85 44.813 136.725 45.688 135.6 46.552 135.038 47.636 135.038 48.938V49.083C135.038 49.932 135.194 50.667 135.517 51.292 135.85 51.917 136.439 52.479 137.288 52.979 138.131 53.479 139.293 53.953 140.767 54.396 142.236 54.844 144.09 55.365 146.329 55.958 148.98 56.667 151.34 57.458 153.413 58.333 155.48 59.198 157.225 60.24 158.642 61.458 160.069 62.682 161.147 64.12 161.871 65.771 162.59 67.412 162.954 69.375 162.954 71.667V71.833C162.954 74.417 162.475 76.724 161.517 78.75 160.569 80.766 159.251 82.458 157.559 83.833 155.861 85.208 153.84 86.261 151.496 86.979 149.147 87.698 146.559 88.063 143.725 88.063Z" fill="#fff"/>
+        <path d="M228.201 34.938H267.701V45.188H239.639V55.813H264.326V66.063H239.639V77.063H268.076V87.313H228.201V34.938Z" fill="#fff"/>
+        <path d="M197.505 88.208C193.672 88.208 190.109 87.511 186.818 86.125 183.526 84.724 180.677 82.813 178.276 80.396 175.886 77.979 174.016 75.125 172.672 71.833 171.323 68.542 170.651 65.021 170.651 61.271V61.125C170.651 57.391 171.323 53.891 172.672 50.625 174.016 47.349 175.886 44.479 178.276 42.021 180.677 39.552 183.547 37.604 186.88 36.188 190.224 34.761 193.922 34.042 197.964 34.042 200.406 34.042 202.636 34.245 204.651 34.646 206.677 35.052 208.511 35.599 210.151 36.292 211.802 36.99 213.323 37.833 214.714 38.833 216.115 39.833 217.412 40.932 218.609 42.125L211.276 50.583C209.234 48.74 207.151 47.292 205.026 46.25 202.912 45.198 200.531 44.667 197.88 44.667 195.682 44.667 193.651 45.094 191.776 45.938 189.912 46.787 188.307 47.958 186.964 49.458 185.615 50.958 184.568 52.698 183.818 54.667 183.068 56.625 182.693 58.729 182.693 60.979V61.125C182.693 63.375 183.068 65.5 183.818 67.5 184.568 69.49 185.599 71.229 186.922 72.729 188.255 74.219 189.849 75.396 191.714 76.271 193.589 77.146 195.641 77.583 197.88 77.583 200.88 77.583 203.412 77.037 205.484 75.938 207.552 74.844 209.609 73.349 211.651 71.458L218.984 78.854C217.636 80.302 216.24 81.599 214.797 82.75 213.349 83.906 211.766 84.891 210.047 85.708 208.323 86.531 206.443 87.146 204.401 87.563 202.359 87.99 200.057 88.208 197.505 88.208Z" fill="#fff"/>
+        <path d="M278.33 34.938H288.955L313.476 67.188V34.938H324.851V87.313H315.059L289.684 54.021V87.313H278.33V34.938Z" fill="#fff"/>
+        <path d="M335.854 78.563L364.666 45.042H336.749V34.938H379.479V43.688L350.666 77.208H379.479V87.313H335.854V78.563Z" fill="#fff"/>
         <path d="M390.941 34.938H402.462V87.313H390.941V34.938Z" fill="#DDAC63"/>
-        <mask id="mf1" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="411" y="34" width="53" height="55"><path d="M411.234 34.927H463.875V88.563H411.234V34.927Z" fill="white"/></mask>
-        <g mask="url(#mf1)"><path d="M424.469 52.427L411.552 87.021C411.234 87.865 411.859 88.766 412.755 88.766H423.745C424.292 88.766 424.781 88.417 424.964 87.906L428.031 79.219L431.745 68.089C431.833 67.828 431.833 67.547 431.745 67.281L426.901 52.479C426.526 51.323 424.896 51.287 424.469 52.427ZM442.714 34.927H432.911C432.026 34.927 431.401 35.797 431.693 36.635L437.198 52.51L437.208 52.49L446.24 79.219L449.375 87.912C449.557 88.422 450.042 88.766 450.583 88.766H461.849C462.75 88.766 463.37 87.865 463.057 87.026L443.922 35.766C443.734 35.26 443.255 34.927 442.714 34.927Z" fill="#DDAC63"/></g>
-        <mask id="mf2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="118" height="89"><path d="M0.651 0.297H117.667V88.693H0.651V0.297Z" fill="white"/></mask>
-        <g mask="url(#mf2)"><path d="M77.662 0.297C77.662 0.297 51.318 0.797 52.073 7.823C52.823 14.849 103.245 22.625 97.729 31.401C92.208 40.182 0.646 45.479 0.901 88.734H66.391C66.391 88.734 58.844 65.516 76.406 54.229C93.964 42.943 126.323 36.922 114.031 26.135C101.74 15.349 57.417 12.313 57.589 7.068C57.729 2.948 77.662 0.297 77.662 0.297Z" fill="#DDAC63"/></g>
+        <mask id="n1" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="411" y="34" width="53" height="55"><path d="M411.234 34.927H463.875V88.563H411.234V34.927Z" fill="#fff"/></mask>
+        <g mask="url(#n1)"><path d="M424.469 52.427L411.552 87.021C411.234 87.865 411.859 88.766 412.755 88.766H423.745C424.292 88.766 424.781 88.417 424.964 87.906L428.031 79.219 431.745 68.089C431.833 67.828 431.833 67.547 431.745 67.281L426.901 52.479C426.526 51.323 424.896 51.287 424.469 52.427ZM442.714 34.927H432.911C432.026 34.927 431.401 35.797 431.693 36.635L437.198 52.51 437.208 52.49 446.24 79.219 449.375 87.912C449.557 88.422 450.042 88.766 450.583 88.766H461.849C462.75 88.766 463.37 87.865 463.057 87.026L443.922 35.766C443.734 35.26 443.255 34.927 442.714 34.927Z" fill="#DDAC63"/></g>
+        <mask id="n2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="118" height="89"><path d="M.651.297H117.667V88.693H.651V.297Z" fill="#fff"/></mask>
+        <g mask="url(#n2)"><path d="M77.662.297C77.662.297 51.318.797 52.073 7.823 52.823 14.849 103.245 22.625 97.729 31.401 92.208 40.182.646 45.479.901 88.734H66.391C66.391 88.734 58.844 65.516 76.406 54.229 93.964 42.943 126.323 36.922 114.031 26.135 101.74 15.349 57.417 12.313 57.589 7.068 57.729 2.948 77.662.297 77.662.297Z" fill="#DDAC63"/></g>
       </svg>
     </a>
-    <div class="nav__links" id="navLinks">
-      <a href="#piliers" class="nav__link">Plateforme</a>
-      <a href="#audit" class="nav__link">Audit</a>
-      <a href="#securite" class="nav__link">Souveraineté</a>
-      <a href="#contact" class="btn-primary nav__cta">Auditer mes agents</a>
+    <div class="nav-links">
+      <a href="#probleme">Le Problème</a>
+      <a href="#solution">La Solution</a>
+      <a href="#plateforme">Plateforme</a>
+      <a href="#offres">Offres</a>
+      <a href="#contact" class="btn btn-gold nav-cta">Auditer mes agents</a>
     </div>
-    <button class="nav__mobile" id="navToggle" aria-label="Menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    <button class="mobile-menu-btn" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- ═══════════════════════════════════════════════ -->
+<!--  HERO                                          -->
+<!-- ═══════════════════════════════════════════════ -->
 <section class="hero" id="hero">
-  <div class="hero__bg"></div>
-  <div class="hero__grid"></div>
-  <div class="hero__gradient"></div>
-  <div class="container">
-    <div class="hero__content fade-up">
-      <span class="surtitre">La Tour de Contrôle de vos Agents IA</span>
-      <h1 class="hero__headline">Vos agents IA méritent <span>un cockpit.</span></h1>
-      <p class="hero__sub">L'infrastructure souveraine qui agrège, observe, sécurise et pilote tous vos agents IA — quel que soit le LLM, quel que soit le fournisseur.</p>
-      <div class="hero__ctas">
-        <a href="#contact" class="btn-primary">Auditer mes agents</a>
-        <a href="#piliers" class="btn-ghost">Découvrir Sentinel</a>
-      </div>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="container hero-content">
+    <div class="hero-surtitre fade-in">La Tour de Contrôle de vos Agents IA</div>
+    <h1 class="display hero-headline fade-in fade-in-delay-1">Vos agents IA méritent<br>un cockpit.</h1>
+    <p class="hero-sub fade-in fade-in-delay-2">L'infrastructure souveraine qui agrège, observe, sécurise et pilote tous vos agents IA — quel que soit le LLM, quel que soit le fournisseur.</p>
+    <div class="hero-ctas fade-in fade-in-delay-3">
+      <a href="#contact" class="btn btn-gold">Auditer mes agents</a>
+      <a href="#solution" class="btn btn-ghost">Découvrir Sentinel →</a>
     </div>
-    <div class="hero__stats fade-up fade-up-delay-2">
-      <div>
-        <div class="hero__stat-value" data-count="300">0</div>
-        <div class="hero__stat-label">Connecteurs disponibles</div>
-      </div>
-      <div>
-        <div class="hero__stat-value">100%</div>
-        <div class="hero__stat-label">Infrastructure FR/CH</div>
-      </div>
-      <div>
-        <div class="hero__stat-value">24/7</div>
-        <div class="hero__stat-label">SOC &amp; monitoring</div>
-      </div>
-      <div>
-        <div class="hero__stat-value">5 jours</div>
-        <div class="hero__stat-label">Audit complet</div>
-      </div>
+    <div class="sovereign-bar fade-in fade-in-delay-3">
+      <span class="sovereign-badge">● 100% FR/CH</span>
+      <span class="sovereign-badge">● RGPD & AI Act</span>
+      <span class="sovereign-badge">● SecNumCloud-ready</span>
     </div>
   </div>
 </section>
 
-<!-- ═══ DOUBLE DETTE ═══ -->
-<section class="dette" id="dette">
+<!-- ═══════════════════════════════════════════════ -->
+<!--  DOUBLE DETTE                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="probleme">
   <div class="container">
-    <div class="fade-up">
-      <span class="surtitre">Le problème</span>
-      <h2>Vos agents IA accumulent<br>une <span style="color:var(--gold)">double dette.</span></h2>
+    <div class="section-header fade-in">
+      <div class="section-surtitre">Le Problème</div>
+      <h2 class="h1 section-title">Vos agents IA accumulent<br>une double dette.</h2>
     </div>
-    <div class="dette__grid">
-      <div class="dette__card dette__card--tech card fade-up fade-up-delay-1">
-        <h4 style="color:var(--error)">Dette technique</h4>
-        <ul>
-          <li>MTTR incontrôlé, temps de résolution en hausse</li>
-          <li>Coûts d'infrastructure multipliés par 3 en 6 mois</li>
-          <li>Agents fragiles, sans monitoring ni observabilité</li>
-          <li>Maintenance impossible, dette qui s'accumule</li>
-        </ul>
+    <div class="grid-2">
+      <div class="card dette-card dette-tech fade-in">
+        <div class="tag tag-gold" style="margin-bottom:20px">Dette technique</div>
+        <h3 class="h4" style="margin-bottom:12px">Maintenance impossible, coûts incontrôlés</h3>
+        <p class="body text-slate" style="line-height:1.7">MTTR incontrôlé, coûts ×3 en 6 mois, agents fragiles sans monitoring. Chaque nouvel agent augmente la complexité sans visibilité sur la performance ni l'impact métier.</p>
+        <div style="margin-top:24px;display:flex;gap:24px">
+          <div><span class="h3 text-gold">×3</span><br><span class="caption text-muted">Explosion des coûts</span></div>
+          <div><span class="h3 text-gold">0</span><br><span class="caption text-muted">Monitoring centralisé</span></div>
+        </div>
       </div>
-      <div class="dette__card dette__card--secu card fade-up fade-up-delay-2">
-        <h4 style="color:var(--warning)">Dette sécuritaire</h4>
-        <ul>
-          <li>Surface d'attaque élargie à chaque nouvel agent</li>
-          <li>Fuite de données sensibles sans audit trail</li>
-          <li>Non-conformité RGPD et AI Act</li>
-          <li>Zéro visibilité sur les actions autonomes</li>
-        </ul>
+      <div class="card dette-card dette-secu fade-in fade-in-delay-1">
+        <div class="tag" style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);color:#F59E0B;margin-bottom:20px">Dette sécuritaire</div>
+        <h3 class="h4" style="margin-bottom:12px">Surface d'attaque élargie, zéro audit trail</h3>
+        <p class="body text-slate" style="line-height:1.7">Fuite de données, non-conformité AI Act, Shadow IT (ChatGPT non contrôlé). 80 % des Fortune 500 ont subi une faille liée à un agent IA autonome.</p>
+        <div style="margin-top:24px;display:flex;gap:24px">
+          <div><span class="h3 text-gold">80%</span><br><span class="caption text-muted">Fortune 500 touchées</span></div>
+          <div><span class="h3 text-gold">12</span><br><span class="caption text-muted">Agents non supervisés / entreprise</span></div>
+        </div>
       </div>
     </div>
-    <div class="dette__transition fade-up fade-up-delay-3">
-      Ascenzia résout les deux. Simultanément.
+    <div class="fade-in" style="text-align:center;margin-top:48px">
+      <p class="h4 text-gold">Ascenzia résout les deux. Simultanément.</p>
     </div>
   </div>
 </section>
 
-<!-- ═══ 4 PILIERS ═══ -->
-<section class="piliers" id="piliers">
+<!-- ═══════════════════════════════════════════════ -->
+<!--  4 PILIERS                                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="solution" style="background:var(--navy-dark)">
   <div class="container">
-    <div class="fade-up">
-      <span class="surtitre">La solution</span>
-      <h2>Une plateforme. <span style="color:var(--gold)">Quatre piliers.</span></h2>
-      <p style="font-size:18px;color:var(--slate-blue);max-width:600px;margin-top:12px;line-height:1.7">Ascenzia Sentinel unifie le contrôle de vos agents IA en une infrastructure souveraine.</p>
+    <div class="section-header-center fade-in">
+      <div class="section-surtitre">La Solution</div>
+      <h2 class="h1 section-title">Une plateforme. Quatre piliers.</h2>
+      <p class="body-lg section-sub">Ascenzia Sentinel unifie le contrôle de vos agents IA en une infrastructure souveraine.</p>
     </div>
-    <div class="piliers__grid">
-      <div class="pilier fade-up fade-up-delay-1">
-        <div class="pilier__icon" style="background:rgba(221,172,99,0.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DDAC63" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-        </div>
-        <div class="pilier__num" style="color:var(--gold)">Pilier 01</div>
-        <h4>Agrégez tout.</h4>
-        <p class="pilier__desc">Connectez n'importe quel agent IA, n'importe quel LLM, n'importe quelle source de données — en une API unifiée.</p>
-        <ul class="pilier__features">
-          <li>300+ connecteurs prêts à l'emploi</li>
-          <li>LLM-agnostique : Claude, Gemini, Mistral, LLama, Kimi</li>
-          <li>API unifiée REST + GraphQL</li>
-          <li>Intégration en moins de 48h</li>
+    <div class="grid-4">
+      <div class="card pillar-card fade-in">
+        <div class="pillar-icon pillar-icon-agreger">⊕</div>
+        <div class="pillar-num">01 — Agréger</div>
+        <h3 class="h4 pillar-title">Connectez tout.</h3>
+        <p class="body pillar-desc">N'importe quel agent, n'importe quel LLM, n'importe quelle source — en une API unifiée.</p>
+        <ul class="pillar-features">
+          <li>300+ connecteurs</li>
+          <li>LLM-agnostique</li>
+          <li>API REST + GraphQL</li>
+          <li>Intégration en 48h</li>
         </ul>
       </div>
-      <div class="pilier fade-up fade-up-delay-2">
-        <div class="pilier__icon" style="background:rgba(82,190,192,0.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#52BEC0" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        </div>
-        <div class="pilier__num" style="color:var(--teal)">Pilier 02</div>
-        <h4>Observez tout, en temps réel.</h4>
-        <p class="pilier__desc">Chaque action de chaque agent, tracée et scorée. Détectez les dérives avant qu'elles ne deviennent des incidents.</p>
-        <ul class="pilier__features">
-          <li>Score de santé 0-100 par agent</li>
-          <li>Traces distribuées OpenTelemetry</li>
-          <li>Audit trail complet et horodaté</li>
-          <li>Dashboard de supervision temps réel</li>
+      <div class="card pillar-card fade-in fade-in-delay-1">
+        <div class="pillar-icon pillar-icon-observer">◎</div>
+        <div class="pillar-num">02 — Observer</div>
+        <h3 class="h4 pillar-title">Voyez tout, en temps réel.</h3>
+        <p class="body pillar-desc">Chaque action de chaque agent, tracée et scorée. Détectez les dérives avant l'incident.</p>
+        <ul class="pillar-features">
+          <li>Score de santé 0-100</li>
+          <li>Traces OpenTelemetry</li>
+          <li>Audit trail complet</li>
+          <li>Dashboard temps réel</li>
         </ul>
       </div>
-      <div class="pilier fade-up fade-up-delay-3">
-        <div class="pilier__icon" style="background:rgba(239,68,68,0.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="pilier__num" style="color:var(--error)">Pilier 03</div>
-        <h4>Sécurisez. Par défaut.</h4>
-        <p class="pilier__desc">Chaque couche de Sentinel est conçue security-first. Pas de patch. Pas d'add-on. Du natif.</p>
-        <ul class="pilier__features">
+      <div class="card pillar-card fade-in fade-in-delay-2">
+        <div class="pillar-icon pillar-icon-securiser">⊘</div>
+        <div class="pillar-num">03 — Sécuriser</div>
+        <h3 class="h4 pillar-title">Sécurité native.</h3>
+        <p class="body pillar-desc">Pas un add-on. Chaque couche est conçue security-first, du chiffrement au kill-switch.</p>
+        <ul class="pillar-features">
           <li>Architecture Zero Trust</li>
-          <li>Chiffrement LUKS2-AES-XTS512</li>
-          <li>EDR/MDR natif intégré</li>
-          <li>Kill-switch instantané par agent</li>
+          <li>LUKS2-AES-XTS512</li>
+          <li>EDR/MDR natif</li>
+          <li>Kill-switch par agent</li>
         </ul>
       </div>
-      <div class="pilier fade-up fade-up-delay-4">
-        <div class="pilier__icon" style="background:rgba(59,130,246,0.1)">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><path d="M12 20V10M6 20V4M18 20v-6"/></svg>
-        </div>
-        <div class="pilier__num" style="color:var(--info)">Pilier 04</div>
-        <h4>Pilotez. Toujours.</h4>
-        <p class="pilier__desc">Opérationnel et stratégique. Du self-healing automatique aux décisions métier éclairées par la donnée.</p>
-        <ul class="pilier__features">
-          <li>Self-healing et auto-recovery</li>
-          <li>SOC 24/7 avec alertes temps réel</li>
-          <li>RBAC granulaire par rôle et périmètre</li>
-          <li>MCO prédictif et anti-injection prompt</li>
+      <div class="card pillar-card fade-in fade-in-delay-3">
+        <div class="pillar-icon pillar-icon-piloter">◈</div>
+        <div class="pillar-num">04 — Piloter</div>
+        <h3 class="h4 pillar-title">Gardez le contrôle.</h3>
+        <p class="body pillar-desc">Du self-healing automatique aux décisions stratégiques éclairées par la donnée.</p>
+        <ul class="pillar-features">
+          <li>Self-healing & auto-recovery</li>
+          <li>SOC 24/7</li>
+          <li>RBAC granulaire</li>
+          <li>MCO prédictif</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ DASHBOARD PREVIEW ═══ -->
-<section class="dashboard" id="dashboard">
+<!-- ═══════════════════════════════════════════════ -->
+<!--  DASHBOARD PREVIEW                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="plateforme">
   <div class="container">
-    <div class="fade-up">
-      <span class="surtitre">En action</span>
-      <h2>Votre cockpit de <span style="color:var(--gold)">supervision IA.</span></h2>
-      <p style="font-size:18px;color:var(--slate-blue);max-width:600px;margin-top:12px;line-height:1.7">Visualisez la santé de chaque agent, détectez les anomalies avant qu'elles ne deviennent des incidents, et gardez le contrôle opérationnel depuis une interface unique.</p>
+    <div class="section-header-center fade-in">
+      <div class="section-surtitre">En Action</div>
+      <h2 class="h1 section-title">Votre cockpit de supervision IA.</h2>
+      <p class="body-lg section-sub">Visualisez la santé de chaque agent, détectez les anomalies et gardez le contrôle depuis une interface unique.</p>
     </div>
-    <div class="dashboard__mockup fade-up fade-up-delay-1">
-      <div class="dashboard__topbar">
-        <span class="dashboard__dot dashboard__dot--r"></span>
-        <span class="dashboard__dot dashboard__dot--y"></span>
-        <span class="dashboard__dot dashboard__dot--g"></span>
+    <div class="dash-preview fade-in" style="perspective:1200px">
+      <div class="dash-bar">
+        <span class="dash-dot" style="background:#EF4444"></span>
+        <span class="dash-dot" style="background:#F59E0B"></span>
+        <span class="dash-dot" style="background:#22C55E"></span>
         <span style="flex:1"></span>
-        <span style="font-size:12px;color:var(--slate-blue);font-family:var(--font-mono)">Sentinel — Dashboard</span>
+        <span class="caption mono text-muted">sentinel.ascenzia.fr</span>
       </div>
-      <div class="dashboard__content">
-        <div class="dashboard__stat">
-          <div class="dashboard__stat-val" style="color:var(--success)">94<span style="font-size:18px;color:var(--slate-blue)">/100</span></div>
-          <div class="dashboard__stat-lbl">Santé globale</div>
+      <div class="dash-grid">
+        <div class="dash-stat">
+          <div class="dash-stat-value text-gold" data-count="94">94</div>
+          <div class="dash-stat-label">Score de santé global</div>
         </div>
-        <div class="dashboard__stat">
-          <div class="dashboard__stat-val" style="color:var(--gold)">12</div>
-          <div class="dashboard__stat-lbl">Agents actifs</div>
+        <div class="dash-stat">
+          <div class="dash-stat-value" style="color:var(--teal)" data-count="12">12</div>
+          <div class="dash-stat-label">Agents actifs supervisés</div>
         </div>
-        <div class="dashboard__stat">
-          <div class="dashboard__stat-val" style="color:var(--teal)">-47%</div>
-          <div class="dashboard__stat-lbl">MTTR (temps de résolution)</div>
+        <div class="dash-stat">
+          <div class="dash-stat-value" style="color:var(--success)" data-count="47">-47%</div>
+          <div class="dash-stat-label">MTTR — Temps de résolution</div>
         </div>
-        <div class="dashboard__agents">
-          <h5>Agents supervisés</h5>
-          <div class="agent-row" style="font-size:12px;color:var(--navy-slate-light);font-weight:600">
-            <span>Agent</span><span>Statut</span><span>Score</span><span>Latence</span>
-          </div>
-          <div class="agent-row">
-            <span class="agent-name">RAG Finance — Claude 3.5</span>
-            <span class="agent-status agent-status--ok">Actif</span>
-            <span class="agent-score" style="color:var(--success)">98</span>
-            <span class="agent-latency">45ms</span>
-          </div>
-          <div class="agent-row">
-            <span class="agent-name">Support Client — Mistral Large</span>
-            <span class="agent-status agent-status--ok">Actif</span>
-            <span class="agent-score" style="color:var(--success)">92</span>
-            <span class="agent-latency">120ms</span>
-          </div>
-          <div class="agent-row">
-            <span class="agent-name">Data Pipeline — LLama 3</span>
-            <span class="agent-status agent-status--warn">Alerte</span>
-            <span class="agent-score" style="color:var(--warning)">67</span>
-            <span class="agent-latency">340ms</span>
-          </div>
-          <div class="agent-row">
-            <span class="agent-name">Doc Generator — Gemini Pro</span>
-            <span class="agent-status agent-status--ok">Actif</span>
-            <span class="agent-score" style="color:var(--success)">89</span>
-            <span class="agent-latency">95ms</span>
-          </div>
+      </div>
+      <div class="dash-agents">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span class="h5" style="font-weight:600">Agents supervisés</span>
+          <span class="tag tag-teal" style="font-size:11px">Temps réel</span>
+        </div>
+        <div class="agent-row">
+          <span class="agent-name">Agent RAG — Documentation</span>
+          <span class="agent-status"><span class="status-dot status-ok"></span> Score 97</span>
+        </div>
+        <div class="agent-row">
+          <span class="agent-name">Agent Analyse Financière</span>
+          <span class="agent-status"><span class="status-dot status-ok"></span> Score 94</span>
+        </div>
+        <div class="agent-row">
+          <span class="agent-name">Agent Support Client L1</span>
+          <span class="agent-status"><span class="status-dot status-warn"></span> Score 78</span>
+        </div>
+        <div class="agent-row">
+          <span class="agent-name">Agent Conformité RGPD</span>
+          <span class="agent-status"><span class="status-dot status-ok"></span> Score 96</span>
+        </div>
+        <div class="agent-row">
+          <span class="agent-name">Agent Extraction Contrats</span>
+          <span class="agent-status"><span class="status-dot status-ok"></span> Score 91</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ STATS / SOCIAL PROOF ═══ -->
-<section class="stats" id="marche">
+<!-- ═══════════════════════════════════════════════ -->
+<!--  MARKET STATS                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" style="background:var(--navy-dark)">
   <div class="container">
-    <div class="fade-up" style="text-align:center">
-      <span class="surtitre">Le marché</span>
-      <h2>L'IA agentique explose.<br><span style="color:var(--gold)">Le contrôle ne suit pas.</span></h2>
+    <div class="section-header-center fade-in">
+      <div class="section-surtitre">Le Marché</div>
+      <h2 class="h1 section-title">L'IA agentique explose.<br>Le contrôle ne suit pas.</h2>
     </div>
-    <div class="stats__grid fade-up fade-up-delay-1">
-      <div class="stats__item">
-        <div class="stats__value">7,3 Md$</div>
-        <div class="stats__label">Marché IA agentique 2025</div>
+    <div class="stat-grid">
+      <div class="card fade-in" style="text-align:center;padding:40px 24px">
+        <div class="stat-number">7,3 Md$</div>
+        <div class="stat-label">Marché IA agentique 2025<br><span class="caption text-muted">MarketsandMarkets</span></div>
       </div>
-      <div class="stats__item">
-        <div class="stats__value">×7</div>
-        <div class="stats__label">Croissance en 5 ans</div>
+      <div class="card fade-in fade-in-delay-1" style="text-align:center;padding:40px 24px">
+        <div class="stat-number">×7</div>
+        <div class="stat-label">Croissance en 5 ans<br><span class="caption text-muted">MarketsandMarkets</span></div>
       </div>
-      <div class="stats__item">
-        <div class="stats__value">79%</div>
-        <div class="stats__label">Adoption prévue d'ici 2027</div>
+      <div class="card fade-in fade-in-delay-2" style="text-align:center;padding:40px 24px">
+        <div class="stat-number">79%</div>
+        <div class="stat-label">Adoption prévue d'ici 2027<br><span class="caption text-muted">PwC</span></div>
       </div>
-      <div class="stats__item">
-        <div class="stats__value">45,8%</div>
-        <div class="stats__label">TCAC jusqu'en 2034</div>
+      <div class="card fade-in fade-in-delay-3" style="text-align:center;padding:40px 24px">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Agents / entreprise sans supervision<br><span class="caption text-muted">ZDNet</span></div>
       </div>
     </div>
-    <div class="stats__source fade-up fade-up-delay-2">Sources : MarketsandMarkets, PwC, ZDNet</div>
   </div>
 </section>
 
-<!-- ═══ AUDIT ═══ -->
-<section class="audit" id="audit">
+<!-- ═══════════════════════════════════════════════ -->
+<!--  OFFRES                                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="offres">
   <div class="container">
-    <div class="audit__header fade-up">
-      <span class="tag">Offre d'entrée</span>
-      <h2 style="margin-top:16px">Audit Tour de Contrôle IA</h2>
-      <div class="audit__price">4 900 € HT · 5 jours</div>
-      <p style="font-size:17px;color:var(--slate-blue);margin-top:16px;line-height:1.7">En 5 jours, nous auditons vos processus, identifions 3+ cas d'usage IA à fort ROI, et vous livrons une feuille de route actionnable.</p>
+    <div class="section-header-center fade-in">
+      <div class="section-surtitre">Nos Offres</div>
+      <h2 class="h1 section-title">Un parcours clair. Des résultats concrets.</h2>
+      <p class="body-lg section-sub">De l'audit initial au pilotage stratégique continu.</p>
     </div>
-
-    <div class="audit__timeline fade-up fade-up-delay-1">
-      <div class="audit__day">
-        <div class="audit__day-num">J1</div>
-        <div class="audit__day-title">Cadrage &amp; Kickoff</div>
-        <div class="audit__day-desc">Alignement objectifs, cartographie SI, identification parties prenantes.</div>
-      </div>
-      <div class="audit__day">
-        <div class="audit__day-num">J2</div>
-        <div class="audit__day-title">Immersion Processus</div>
-        <div class="audit__day-desc">Interviews métier, observation terrain, mapping des flux de données.</div>
-      </div>
-      <div class="audit__day">
-        <div class="audit__day-num">J3</div>
-        <div class="audit__day-title">Analyse IA</div>
-        <div class="audit__day-desc">Scoring des processus, identification des gisements d'automatisation.</div>
-      </div>
-      <div class="audit__day">
-        <div class="audit__day-num">J4</div>
-        <div class="audit__day-title">Design Agents</div>
-        <div class="audit__day-desc">Architecture cible, calcul ROI par cas d'usage, matrice effort/impact.</div>
-      </div>
-      <div class="audit__day">
-        <div class="audit__day-num">J5</div>
-        <div class="audit__day-title">Livraison Roadmap</div>
-        <div class="audit__day-desc">Présentation CODIR, feuille de route 90 jours, quick wins identifiés.</div>
-      </div>
-    </div>
-
-    <div class="audit__livrables fade-up fade-up-delay-2">
-      <div>
-        <h3 style="margin-bottom:24px">Ce que vous recevez.</h3>
-        <ul class="audit__livrables-list">
-          <li>Cartographie complète de vos processus IA-compatibles</li>
-          <li>3+ cas d'usage détaillés avec ROI chiffré</li>
-          <li>Architecture technique cible Sentinel</li>
-          <li>Feuille de route 90 jours priorisée</li>
-          <li>Présentation CODIR prête à l'emploi</li>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div class="card card-glow offer-card fade-in" style="display:flex;flex-direction:column">
+        <span class="offer-type" style="background:rgba(221,172,99,0.15);color:var(--gold)">Painkiller</span>
+        <h3 class="h4">Audit Tour de Contrôle IA</h3>
+        <div class="offer-price">4 900 € <span class="body text-muted">HT</span></div>
+        <p class="caption text-muted" style="margin-bottom:20px">5 jours — Résultats garantis</p>
+        <ul class="offer-features">
+          <li>Cartographie complète de vos agents IA</li>
+          <li>Évaluation double dette (technique + sécuritaire)</li>
+          <li>3 cas d'usage ROI identifiés — ou l'audit est offert</li>
+          <li>Feuille de route prioritisée</li>
+          <li>Rapport exécutif pour la DG</li>
         </ul>
+        <a href="#contact" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:auto">Réserver mon audit</a>
       </div>
-      <div class="audit__guarantee">
-        <div style="font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:16px">Garantie</div>
-        <p class="audit__guarantee-text">« Si nous ne trouvons pas 3 cas d'usage à fort ROI, l'audit est offert. »</p>
+      <div class="card offer-card fade-in fade-in-delay-1" style="display:flex;flex-direction:column">
+        <span class="offer-type" style="background:rgba(82,190,192,0.15);color:var(--teal)">Vitamine</span>
+        <h3 class="h4">Déploiement Sentinel</h3>
+        <div class="offer-price">30 – 120 K€</div>
+        <p class="caption text-muted" style="margin-bottom:20px">3 à 6 mois — Clé en main</p>
+        <ul class="offer-features">
+          <li>Installation Sentinel sur infrastructure souveraine</li>
+          <li>Intégration de tous vos agents existants</li>
+          <li>Configuration des 4 piliers</li>
+          <li>Formation équipes DSI et métier</li>
+          <li>Migration progressive et sécurisée</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:auto">Demander un devis</a>
+      </div>
+      <div class="card offer-card fade-in fade-in-delay-2" style="display:flex;flex-direction:column">
+        <span class="offer-type" style="background:rgba(59,130,246,0.15);color:#3B82F6">Candy</span>
+        <h3 class="h4">Copilote Stratégique IA</h3>
+        <div class="offer-price">3 – 8 K€ <span class="body text-muted">/mois</span></div>
+        <p class="caption text-muted" style="margin-bottom:20px">Continu — Votre CSO IA externalisé</p>
+        <ul class="offer-features">
+          <li>Supervision continue SOC 24/7</li>
+          <li>MCO prédictif et optimisation</li>
+          <li>Veille technologique et réglementaire</li>
+          <li>Comité de pilotage mensuel</li>
+          <li>Évolutions et nouveaux cas d'usage</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:auto">En savoir plus</a>
       </div>
     </div>
+    <p class="caption text-muted fade-in" style="text-align:center;margin-top:24px">Parcours client : Audit (4,9K€) → Déploiement (30-120K€) → Abonnement (3-8K€/mois)</p>
   </div>
 </section>
+<style>@media(max-width:768px){#offres .grid-3-custom{grid-template-columns:1fr !important}}</style>
 
-<!-- ═══ SOUVERAINETÉ ═══ -->
-<section class="souv" id="securite">
+<!-- ═══════════════════════════════════════════════ -->
+<!--  CTA BAND                                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="contact">
   <div class="container">
-    <div class="fade-up">
-      <span class="surtitre">Souveraineté</span>
-      <h2>Vos données restent en France.<br><span style="color:var(--gold)">Toujours.</span></h2>
-      <p style="font-size:18px;color:var(--slate-blue);max-width:600px;margin-top:12px;line-height:1.7">Infrastructure 100 % FR/CH. Aucune dépendance hyperscaler US. Juridiction européenne exclusive.</p>
-    </div>
-    <div class="souv__grid">
-      <div class="souv__item fade-up fade-up-delay-1">
-        <div class="souv__item-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <h4>Hébergement souverain</h4>
-        <p>OVH, Scaleway, Infomaniak — 100 % France et Suisse. Aucun datacenter soumis au Cloud Act.</p>
-      </div>
-      <div class="souv__item fade-up fade-up-delay-2">
-        <div class="souv__item-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-        </div>
-        <h4>Chiffrement de bout en bout</h4>
-        <p>LUKS2-AES-XTS512 — au repos et en transit. Clés de chiffrement sous votre contrôle exclusif.</p>
-      </div>
-      <div class="souv__item fade-up fade-up-delay-3">
-        <div class="souv__item-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
-        </div>
-        <h4>Conformité native</h4>
-        <p>RGPD, AI Act, SecNumCloud-ready. Audit trail complet, horodaté, non-altérable.</p>
-      </div>
-      <div class="souv__item fade-up fade-up-delay-1">
-        <div class="souv__item-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg>
-        </div>
-        <h4>Zero Trust natif</h4>
-        <p>Aucun agent n'est digne de confiance par défaut. Chaque action est vérifiée, chaque accès est contrôlé.</p>
-      </div>
-      <div class="souv__item fade-up fade-up-delay-2">
-        <div class="souv__item-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        </div>
-        <h4>Kill-switch instantané</h4>
-        <p>Désactivez n'importe quel agent en un clic. Reprenez le contrôle en cas de dérive ou d'incident.</p>
-      </div>
-      <div class="souv__item fade-up fade-up-delay-3">
-        <div class="souv__item-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="2"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
-        </div>
-        <h4>Juridiction européenne</h4>
-        <p>Aucune loi extraterritoriale US applicable. Vos données, votre juridiction, votre souveraineté.</p>
+    <div class="cta-band fade-in">
+      <h2 class="h1" style="margin-bottom:16px">Prêt à reprendre le contrôle ?</h2>
+      <p class="body-lg text-slate" style="max-width:560px;margin:0 auto 32px">3 cas d'usage ROI identifiés ou l'audit est offert. Garanti.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="mailto:laurent.fontaine@ascenzia.fr" class="btn btn-gold">Réserver mon audit — 4 900 € HT</a>
+        <a href="#solution" class="btn btn-ghost">Découvrir la plateforme →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CTA BAND ═══ -->
-<section class="cta-band" id="contact">
-  <div class="cta-band__bg"></div>
-  <div class="cta-band__glow"></div>
-  <div class="container cta-band__content fade-up">
-    <h2>Prêt à reprendre le <span style="color:var(--gold)">contrôle</span> ?</h2>
-    <p>3 cas d'usage ROI identifiés ou l'audit est offert. Garanti.</p>
-    <div class="cta-band__buttons">
-      <a href="mailto:laurent.fontaine@ascenzia.fr?subject=Audit%20Tour%20de%20Contrôle%20IA" class="btn-primary">Réserver mon audit — 4 900 € HT</a>
-      <a href="#piliers" class="btn-ghost">Découvrir la plateforme</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
+<!-- ═══════════════════════════════════════════════ -->
+<!--  FOOTER                                        -->
+<!-- ═══════════════════════════════════════════════ -->
 <footer class="footer">
-  <div class="container footer__inner">
-    <div class="footer__left">
-      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="22" viewBox="0 0 464 89" fill="none">
-        <mask id="ff0" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="27" y="0" width="86" height="89"><path d="M27.5 0.297H112.922V88.693H27.5V0.297Z" fill="white"/></mask>
-        <g mask="url(#ff0)"><path d="M49.307 29.109L28.037 86.063C27.516 87.453 28.542 88.927 30.021 88.927H48.115C49.016 88.927 49.818 88.359 50.115 87.516L55.167 73.214L61.281 54.896C61.427 54.464 61.427 53.995 61.287 53.563L53.313 29.193C52.688 27.287 50.005 27.229 49.307 29.109ZM79.344 0.292H63.203C61.74 0.292 60.719 1.734 61.198 3.109L70.26 29.245L70.271 29.208L85.146 73.214L90.302 87.526C90.604 88.37 91.406 88.927 92.297 88.927H110.839C112.323 88.927 113.349 87.453 112.828 86.063L81.328 1.677C81.021 0.844 80.229 0.292 79.344 0.292Z" fill="#4A5568"/></g>
-        <path d="M143.725 88.063C139.736 88.063 135.819 87.375 131.975 86L128.309 71.521C130.694 73.469 133.147 75.016 135.663 76.167C138.189 77.323 140.954 77.896 143.954 77.896C146.34 77.896 148.194 77.458 149.517 76.583C150.835 75.708 151.496 74.5 151.496 72.958V72.792C151.496 72.042 151.355 71.386 151.079 70.813C150.814 70.245 150.293 69.708 149.517 69.208C148.736 68.708 147.663 68.208 146.288 67.708C144.923 67.208 143.147 66.688 140.954 66.146C138.314 65.495 135.918 64.771 133.767 63.979C131.626 63.177 129.809 62.188 128.309 61.021C126.809 59.844 125.647 58.386 124.829 56.646C124.006 54.896 123.6 52.724 123.6 50.125V49.979C123.6 47.594 124.043 45.438 124.934 43.521C125.835 41.594 127.1 39.932 128.725 38.542C130.35 37.141 132.277 36.063 134.517 35.313C136.767 34.563 139.236 34.188 141.934 34.188C145.767 34.188 149.288 34.766 152.496 35.917C155.715 37.073 158.673 38.719 161.371 40.854L155.392 49.542C153.043 47.948 150.746 46.688 148.496 45.771C146.256 44.844 144.017 44.375 141.767 44.375C139.527 44.375 137.85 44.813 136.725 45.688C135.6 46.552 135.038 47.636 135.038 48.938V49.083C135.038 49.932 135.194 50.667 135.517 51.292C135.85 51.917 136.439 52.479 137.288 52.979C138.131 53.479 139.293 53.953 140.767 54.396C142.236 54.844 144.09 55.365 146.329 55.958C148.98 56.667 151.34 57.458 153.413 58.333C155.48 59.198 157.225 60.24 158.642 61.458C160.069 62.682 161.147 64.12 161.871 65.771C162.59 67.412 162.954 69.375 162.954 71.667V71.833C162.954 74.417 162.475 76.724 161.517 78.75C160.569 80.766 159.251 82.458 157.559 83.833C155.861 85.208 153.84 86.261 151.496 86.979C149.147 87.698 146.559 88.063 143.725 88.063Z" fill="#4A5568"/>
-        <path d="M228.201 34.938H267.701V45.188H239.639V55.813H264.326V66.063H239.639V77.063H268.076V87.313H228.201V34.938Z" fill="#4A5568"/>
-        <path d="M197.505 88.208C193.672 88.208 190.109 87.511 186.818 86.125C183.526 84.724 180.677 82.813 178.276 80.396C175.886 77.979 174.016 75.125 172.672 71.833C171.323 68.542 170.651 65.021 170.651 61.271V61.125C170.651 57.391 171.323 53.891 172.672 50.625C174.016 47.349 175.886 44.479 178.276 42.021C180.677 39.552 183.547 37.604 186.88 36.188C190.224 34.761 193.922 34.042 197.964 34.042C200.406 34.042 202.636 34.245 204.651 34.646C206.677 35.052 208.511 35.599 210.151 36.292C211.802 36.99 213.323 37.833 214.714 38.833C216.115 39.833 217.412 40.932 218.609 42.125L211.276 50.583C209.234 48.74 207.151 47.292 205.026 46.25C202.912 45.198 200.531 44.667 197.88 44.667C195.682 44.667 193.651 45.094 191.776 45.938C189.912 46.787 188.307 47.958 186.964 49.458C185.615 50.958 184.568 52.698 183.818 54.667C183.068 56.625 182.693 58.729 182.693 60.979V61.125C182.693 63.375 183.068 65.5 183.818 67.5C184.568 69.49 185.599 71.229 186.922 72.729C188.255 74.219 189.849 75.396 191.714 76.271C193.589 77.146 195.641 77.583 197.88 77.583C200.88 77.583 203.412 77.037 205.484 75.938C207.552 74.844 209.609 73.349 211.651 71.458L218.984 78.854C217.636 80.302 216.24 81.599 214.797 82.75C213.349 83.906 211.766 84.891 210.047 85.708C208.323 86.531 206.443 87.146 204.401 87.563C202.359 87.99 200.057 88.208 197.505 88.208Z" fill="#4A5568"/>
-        <path d="M278.33 34.938H288.955L313.476 67.188V34.938H324.851V87.313H315.059L289.684 54.021V87.313H278.33V34.938Z" fill="#4A5568"/>
-        <path d="M335.854 78.563L364.666 45.042H336.749V34.938H379.479V43.688L350.666 77.208H379.479V87.313H335.854V78.563Z" fill="#4A5568"/>
-        <path d="M390.941 34.938H402.462V87.313H390.941V34.938Z" fill="#4A5568"/>
-        <mask id="ff1" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="411" y="34" width="53" height="55"><path d="M411.234 34.927H463.875V88.563H411.234V34.927Z" fill="white"/></mask>
-        <g mask="url(#ff1)"><path d="M424.469 52.427L411.552 87.021C411.234 87.865 411.859 88.766 412.755 88.766H423.745C424.292 88.766 424.781 88.417 424.964 87.906L428.031 79.219L431.745 68.089C431.833 67.828 431.833 67.547 431.745 67.281L426.901 52.479C426.526 51.323 424.896 51.287 424.469 52.427ZM442.714 34.927H432.911C432.026 34.927 431.401 35.797 431.693 36.635L437.198 52.51L437.208 52.49L446.24 79.219L449.375 87.912C449.557 88.422 450.042 88.766 450.583 88.766H461.849C462.75 88.766 463.37 87.865 463.057 87.026L443.922 35.766C443.734 35.26 443.255 34.927 442.714 34.927Z" fill="#4A5568"/></g>
-        <mask id="ff2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="118" height="89"><path d="M0.651 0.297H117.667V88.693H0.651V0.297Z" fill="white"/></mask>
-        <g mask="url(#ff2)"><path d="M77.662 0.297C77.662 0.297 51.318 0.797 52.073 7.823C52.823 14.849 103.245 22.625 97.729 31.401C92.208 40.182 0.646 45.479 0.901 88.734H66.391C66.391 88.734 58.844 65.516 76.406 54.229C93.964 42.943 126.323 36.922 114.031 26.135C101.74 15.349 57.417 12.313 57.589 7.068C57.729 2.948 77.662 0.297 77.662 0.297Z" fill="#4A5568"/></g>
-      </svg>
-      <div class="footer__copy">&copy; 2026 Ascenzia. Tous droits réservés.</div>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="23" viewBox="0 0 464 89" fill="none" style="margin-bottom:16px">
+          <mask id="f0" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="27" y="0" width="86" height="89"><path d="M27.5.297H112.922V88.693H27.5V.297Z" fill="#fff"/></mask>
+          <g mask="url(#f0)"><path d="M49.307 29.109L28.037 86.063C27.516 87.453 28.542 88.927 30.021 88.927H48.115C49.016 88.927 49.818 88.359 50.115 87.516L55.167 73.214 61.281 54.896C61.427 54.464 61.427 53.995 61.287 53.563L53.313 29.193C52.688 27.287 50.005 27.229 49.307 29.109ZM79.344.292H63.203C61.74.292 60.719 1.734 61.198 3.109L70.26 29.245 70.271 29.208 85.146 73.214 90.302 87.526C90.604 88.37 91.406 88.927 92.297 88.927H110.839C112.323 88.927 113.349 87.453 112.828 86.063L81.328 1.677C81.021.844 80.229.292 79.344.292Z" fill="#fff"/></g>
+          <path d="M143.725 88.063C139.736 88.063 135.819 87.375 131.975 86L128.309 71.521C130.694 73.469 133.147 75.016 135.663 76.167 138.189 77.323 140.954 77.896 143.954 77.896 146.34 77.896 148.194 77.458 149.517 76.583 150.835 75.708 151.496 74.5 151.496 72.958V72.792C151.496 72.042 151.355 71.386 151.079 70.813 150.814 70.245 150.293 69.708 149.517 69.208 148.736 68.708 147.663 68.208 146.288 67.708 144.923 67.208 143.147 66.688 140.954 66.146 138.314 65.495 135.918 64.771 133.767 63.979 131.626 63.177 129.809 62.188 128.309 61.021 126.809 59.844 125.647 58.386 124.829 56.646 124.006 54.896 123.6 52.724 123.6 50.125V49.979C123.6 47.594 124.043 45.438 124.934 43.521 125.835 41.594 127.1 39.932 128.725 38.542 130.35 37.141 132.277 36.063 134.517 35.313 136.767 34.563 139.236 34.188 141.934 34.188 145.767 34.188 149.288 34.766 152.496 35.917 155.715 37.073 158.673 38.719 161.371 40.854L155.392 49.542C153.043 47.948 150.746 46.688 148.496 45.771 146.256 44.844 144.017 44.375 141.767 44.375 139.527 44.375 137.85 44.813 136.725 45.688 135.6 46.552 135.038 47.636 135.038 48.938V49.083C135.038 49.932 135.194 50.667 135.517 51.292 135.85 51.917 136.439 52.479 137.288 52.979 138.131 53.479 139.293 53.953 140.767 54.396 142.236 54.844 144.09 55.365 146.329 55.958 148.98 56.667 151.34 57.458 153.413 58.333 155.48 59.198 157.225 60.24 158.642 61.458 160.069 62.682 161.147 64.12 161.871 65.771 162.59 67.412 162.954 69.375 162.954 71.667V71.833C162.954 74.417 162.475 76.724 161.517 78.75 160.569 80.766 159.251 82.458 157.559 83.833 155.861 85.208 153.84 86.261 151.496 86.979 149.147 87.698 146.559 88.063 143.725 88.063Z" fill="#fff"/>
+          <path d="M228.201 34.938H267.701V45.188H239.639V55.813H264.326V66.063H239.639V77.063H268.076V87.313H228.201V34.938Z" fill="#fff"/>
+          <path d="M197.505 88.208C193.672 88.208 190.109 87.511 186.818 86.125 183.526 84.724 180.677 82.813 178.276 80.396 175.886 77.979 174.016 75.125 172.672 71.833 171.323 68.542 170.651 65.021 170.651 61.271V61.125C170.651 57.391 171.323 53.891 172.672 50.625 174.016 47.349 175.886 44.479 178.276 42.021 180.677 39.552 183.547 37.604 186.88 36.188 190.224 34.761 193.922 34.042 197.964 34.042 200.406 34.042 202.636 34.245 204.651 34.646 206.677 35.052 208.511 35.599 210.151 36.292 211.802 36.99 213.323 37.833 214.714 38.833 216.115 39.833 217.412 40.932 218.609 42.125L211.276 50.583C209.234 48.74 207.151 47.292 205.026 46.25 202.912 45.198 200.531 44.667 197.88 44.667 195.682 44.667 193.651 45.094 191.776 45.938 189.912 46.787 188.307 47.958 186.964 49.458 185.615 50.958 184.568 52.698 183.818 54.667 183.068 56.625 182.693 58.729 182.693 60.979V61.125C182.693 63.375 183.068 65.5 183.818 67.5 184.568 69.49 185.599 71.229 186.922 72.729 188.255 74.219 189.849 75.396 191.714 76.271 193.589 77.146 195.641 77.583 197.88 77.583 200.88 77.583 203.412 77.037 205.484 75.938 207.552 74.844 209.609 73.349 211.651 71.458L218.984 78.854C217.636 80.302 216.24 81.599 214.797 82.75 213.349 83.906 211.766 84.891 210.047 85.708 208.323 86.531 206.443 87.146 204.401 87.563 202.359 87.99 200.057 88.208 197.505 88.208Z" fill="#fff"/>
+          <path d="M278.33 34.938H288.955L313.476 67.188V34.938H324.851V87.313H315.059L289.684 54.021V87.313H278.33V34.938Z" fill="#fff"/>
+          <path d="M335.854 78.563L364.666 45.042H336.749V34.938H379.479V43.688L350.666 77.208H379.479V87.313H335.854V78.563Z" fill="#fff"/>
+          <path d="M390.941 34.938H402.462V87.313H390.941V34.938Z" fill="#DDAC63"/>
+          <mask id="f1" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="411" y="34" width="53" height="55"><path d="M411.234 34.927H463.875V88.563H411.234V34.927Z" fill="#fff"/></mask>
+          <g mask="url(#f1)"><path d="M424.469 52.427L411.552 87.021C411.234 87.865 411.859 88.766 412.755 88.766H423.745C424.292 88.766 424.781 88.417 424.964 87.906L428.031 79.219 431.745 68.089C431.833 67.828 431.833 67.547 431.745 67.281L426.901 52.479C426.526 51.323 424.896 51.287 424.469 52.427ZM442.714 34.927H432.911C432.026 34.927 431.401 35.797 431.693 36.635L437.198 52.51 437.208 52.49 446.24 79.219 449.375 87.912C449.557 88.422 450.042 88.766 450.583 88.766H461.849C462.75 88.766 463.37 87.865 463.057 87.026L443.922 35.766C443.734 35.26 443.255 34.927 442.714 34.927Z" fill="#DDAC63"/></g>
+          <mask id="f2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="118" height="89"><path d="M.651.297H117.667V88.693H.651V.297Z" fill="#fff"/></mask>
+          <g mask="url(#f2)"><path d="M77.662.297C77.662.297 51.318.797 52.073 7.823 52.823 14.849 103.245 22.625 97.729 31.401 92.208 40.182.646 45.479.901 88.734H66.391C66.391 88.734 58.844 65.516 76.406 54.229 93.964 42.943 126.323 36.922 114.031 26.135 101.74 15.349 57.417 12.313 57.589 7.068 57.729 2.948 77.662.297 77.662.297Z" fill="#DDAC63"/></g>
+        </svg>
+        <p class="body text-slate" style="max-width:280px;line-height:1.7">La Tour de Contrôle de vos Agents IA. Infrastructure souveraine 100% FR/CH.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Plateforme</h4>
+        <a href="#solution">Les 4 Piliers</a>
+        <a href="#plateforme">Dashboard</a>
+        <a href="#offres">Tarifs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Ressources</h4>
+        <a href="#probleme">Double Dette IA</a>
+        <a href="#">Documentation</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:laurent.fontaine@ascenzia.fr">laurent.fontaine@ascenzia.fr</a>
+        <a href="#">LinkedIn</a>
+      </div>
     </div>
-    <div class="footer__links">
-      <a href="mailto:laurent.fontaine@ascenzia.fr" class="footer__link">Contact</a>
-      <a href="#piliers" class="footer__link">Plateforme</a>
-      <a href="#audit" class="footer__link">Audit</a>
-      <a href="#securite" class="footer__link">Souveraineté</a>
-    </div>
-    <div class="footer__badges">
-      <span class="footer__badge">RGPD</span>
-      <span class="footer__badge">AI Act</span>
-      <span class="footer__badge">SecNumCloud-ready</span>
-      <span class="footer__badge">100% FR/CH</span>
+    <div class="footer-bottom">
+      <span>© 2026 Ascenzia. Tous droits réservés.</span>
+      <div class="footer-badges">
+        <span class="footer-badge">RGPD</span>
+        <span class="footer-badge">AI Act</span>
+        <span class="footer-badge">SecNumCloud</span>
+        <span class="footer-badge">100% FR/CH</span>
+      </div>
     </div>
   </div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════ -->
+<!--  JAVASCRIPT                                    -->
+<!-- ═══════════════════════════════════════════════ -->
 <script>
-// ═══ NAV SCROLL ═══
-const nav = document.getElementById('nav');
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('nav--scrolled', window.scrollY > 40);
-  lastScroll = window.scrollY;
-}, { passive: true });
-
-// ═══ MOBILE NAV ═══
-document.getElementById('navToggle').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('nav__links--open');
-});
-document.querySelectorAll('.nav__link, .nav__cta').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('nav__links--open');
-  });
-});
-
-// ═══ SCROLL REVEAL ═══
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ═══ COUNTER ANIMATION ═══
-const counterEl = document.querySelector('[data-count]');
-if (counterEl) {
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const target = parseInt(entry.target.dataset.count);
-        let current = 0;
-        const step = Math.ceil(target / 40);
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          entry.target.textContent = current + '+';
-        }, 30);
-        counterObserver.unobserve(entry.target);
+// ── Intersection Observer for fade-in animations ──
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced){
+    document.querySelectorAll('.fade-in').forEach(el=>el.classList.add('visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.5 });
-  counterObserver.observe(counterEl);
-}
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+})();
 
-// ═══ SMOOTH SCROLL ═══
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
+// ── Nav scroll effect ──
+(function(){
+  const nav = document.getElementById('nav');
+  let lastScroll = 0;
+  window.addEventListener('scroll',()=>{
+    const y = window.scrollY;
+    if(y > 100){
+      nav.style.background = 'rgba(15,20,25,0.95)';
+      nav.style.borderBottomColor = 'rgba(45,55,72,0.5)';
+    } else {
+      nav.style.background = 'rgba(15,20,25,0.8)';
+      nav.style.borderBottomColor = 'rgba(45,55,72,0.3)';
+    }
+    lastScroll = y;
+  },{passive:true});
+})();
+
+// ── Smooth scroll for anchor links ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id = a.getAttribute('href');
+    if(id === '#') return;
+    const el = document.querySelector(id);
+    if(el){
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({behavior:'smooth'});
     }
   });
 });
