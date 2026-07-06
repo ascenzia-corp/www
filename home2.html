@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ascenzia Sentinel — Reprenez le contrôle de vos agents IA</title>
+<meta name="description" content="Une tour de contrôle unique pour superviser, sécuriser et auditer tous vos agents IA. Hébergement souverain en France (SecNumCloud). Conformité AI Act native.">
+
+<!-- FONTS : stack Ascenzia à 3 niveaux (League Spartan / Poppins / Open Sans) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ──────────────────────────────────────────────────────────────
+   COLOR THEME — dark only, HSL custom properties (spec Ascenzia)
+   Socle slate + gold comme seul accent (< ~5% de l'écran).
+   ────────────────────────────────────────────────────────────── */
+:root{
+  --background:            220 26% 14%;   /* navy-900 #1a202c — brand slate      */
+  --foreground:            240 16% 94%;   /* #ededf2 — near-white, cool          */
+  --primary:               36 64% 63%;    /* gold-400 #ddac63 — seul accent      */
+  --primary-foreground:    220 26% 14%;   /* navy-900 — texte sur gold           */
+  --secondary:             219 22% 18%;   /* navy-800 #232a37 — panneaux élevés  */
+  --secondary-foreground:  240 16% 94%;
+  --muted:                 219 22% 18%;    /* navy-800                           */
+  --muted-foreground:      222 13% 70%;    /* #a8aebc                            */
+  --accent:                36 64% 63%;     /* gold-400 — identique à primary     */
+  --accent-foreground:     220 26% 14%;
+  --accent-hover:          38 68% 68%;     /* gold-300 #e5bd78 — hover dark      */
+  --accent-pressed:        40 68% 76%;     /* gold-200 #ecd19a — press dark      */
+  --destructive:           348 41% 39%;    /* bordeaux #8b3a4a — signal critique */
+  --border:                218 18% 28%;    /* navy-600 #3a4353 — tonal, no-line  */
+  --input:                 218 18% 28%;
+  --ring:                  36 64% 63%;     /* gold focus ring                    */
+  --radius:                0.5rem;         /* 8px — radius bouton (brand "sm")   */
+  --nav-button:            219 22% 18%;    /* navy-800                           */
+  --hero-bg:               221 26% 9%;     /* navy-950 #11151d — fond profond    */
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* Open Sans = police UI par défaut */
+body{
+  font-family:"Open Sans",system-ui,sans-serif;
+  background:hsl(var(--hero-bg));
+  color:hsl(var(--foreground));
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+::selection{background:hsl(var(--primary));color:hsl(var(--primary-foreground))}
+:focus-visible{outline:2px solid hsl(var(--ring));outline-offset:2px;border-radius:var(--radius)}
+
+/* Familles de polices (mapping Tailwind fontFamily) */
+.font-display{font-family:"League Spartan",system-ui,sans-serif}   /* display hero, nav, labels ALL-CAPS */
+.font-heading{font-family:"Poppins",system-ui,sans-serif}          /* sous-titre, éditorial              */
+.font-sans   {font-family:"Open Sans",system-ui,sans-serif}        /* corps / description / défaut       */
+
+/* ──────────────────────────────────────────────────────────────
+   ANIMATIONS — calmes et précises (pas de bounce/scale/parallax)
+   ────────────────────────────────────────────────────────────── */
+@keyframes fade-up{
+  0%  {opacity:0;transform:translateY(20px);filter:blur(4px)}
+  100%{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+@keyframes fade-in{
+  0%  {opacity:0}
+  100%{opacity:1}
+}
+.animate-fade-up{
+  opacity:0;
+  animation:fade-up 0.7s cubic-bezier(0.22,1,0.36,1) forwards; /* ease par défaut Ascenzia */
+}
+.animate-fade-in{
+  opacity:0;
+  animation:fade-in 0.5s ease-out forwards;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   NAVBAR — fixe, transparente, flottante au-dessus de la scène
+   ────────────────────────────────────────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 32px;
+}
+@media(min-width:1024px){.navbar{padding:20px 64px}}
+
+.nav-logo{
+  color:hsl(var(--foreground));
+  font-size:1.25rem;font-weight:600;letter-spacing:-0.01em;
+  font-family:"League Spartan",system-ui,sans-serif;
+}
+/* La lettre "A" (marque) est le seul élément qui porte le gold */
+.nav-logo .mark{color:hsl(var(--primary))}
+
+.nav-links{display:none;gap:32px;align-items:center}
+@media(min-width:768px){.nav-links{display:flex}}
+.nav-links a{
+  font-size:0.875rem;
+  color:hsl(var(--muted-foreground));
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-family:"League Spartan",system-ui,sans-serif;
+  transition:color 220ms cubic-bezier(0.22,1,0.36,1);
+}
+.nav-links a:hover{color:hsl(var(--foreground))}
+
+/* Bouton CTA nav — variant "navCta" */
+.nav-cta{
+  display:none;
+  align-items:center;
+  background:hsl(var(--nav-button));
+  color:hsl(var(--foreground));
+  font-size:0.75rem;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-family:"League Spartan",system-ui,sans-serif;
+  padding:0 24px;height:44px;
+  border:none;border-radius:var(--radius);
+  cursor:pointer;
+  transition:background-color 220ms cubic-bezier(0.22,1,0.36,1);
+}
+@media(min-width:768px){.nav-cta{display:inline-flex}}
+.nav-cta:hover{background:hsl(var(--nav-button) / 0.8)}
+.nav-cta:active{transform:translateY(1px)} /* press = translateY, pas de scale */
+
+/* ──────────────────────────────────────────────────────────────
+   HERO — plein écran, contenu ancré en bas à gauche
+   ────────────────────────────────────────────────────────────── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;align-items:flex-end;
+  background:hsl(var(--hero-bg));
+  overflow:hidden;
+}
+
+/*
+  FOND 3D — CAVEAT : la scène Spline d'origine (scene.splinecode) est figée
+  sur un accent VERT ; le CSS ne la recolore pas. Pour un rendu Ascenzia on
+  utilise ici le fallback dégradé slate→navy recommandé (linear-gradient
+  135deg #1a202c→#2d3748), enrichi de halos gold discrets (cockpit techno).
+  Pour brancher une vraie scène Spline aux teintes Ascenzia, remplacer
+  .hero-bg-3d par le composant <spline-viewer>.
+*/
+.hero-bg-3d{position:absolute;inset:0;z-index:0}
+.hero-bg-3d .fallback{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#1a202c 0%,#2d3748 100%);
+}
+/* Grille technique très discrète (gold à faible opacité) */
+.hero-bg-3d .grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(hsl(var(--primary) / 0.035) 1px,transparent 1px),
+    linear-gradient(90deg,hsl(var(--primary) / 0.035) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse at 25% 60%,black 10%,transparent 70%);
+          mask-image:radial-gradient(ellipse at 25% 60%,black 10%,transparent 70%);
+}
+/* Halos radiaux — gold très contenu (< 5%) + slate */
+.hero-bg-3d .glow-gold{
+  position:absolute;top:8%;right:12%;width:520px;height:520px;
+  background:radial-gradient(circle,hsl(var(--primary) / 0.10) 0%,transparent 68%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-bg-3d .glow-slate{
+  position:absolute;bottom:-10%;left:-6%;width:640px;height:640px;
+  background:radial-gradient(circle,hsl(var(--secondary) / 0.9) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+
+/* Overlay sombre au-dessus de la scène */
+.hero-overlay{position:absolute;inset:0;z-index:1;background:rgba(0,0,0,0.30);pointer-events:none}
+
+/* Conteneur de contenu — clics traversent vers la scène (pointer-events:none) */
+.hero-content{
+  position:relative;z-index:10;pointer-events:none;
+  width:100%;max-width:90%;
+  padding:128px 24px 40px;
+}
+@media(min-width:640px){.hero-content{max-width:28rem}}
+@media(min-width:768px){.hero-content{padding:128px 40px 40px}}
+@media(min-width:1024px){.hero-content{max-width:42rem}}
+
+/* 1 — Titre display (League Spartan) */
+.hero-title{
+  font-family:"League Spartan",system-ui,sans-serif;
+  font-size:clamp(3rem,8vw,6rem);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-0.025em;
+  text-transform:uppercase;
+  color:hsl(var(--foreground));
+  margin-bottom:8px;
+}
+@media(min-width:768px){.hero-title{margin-bottom:16px}}
+.hero-title .gold{color:hsl(var(--primary))}
+
+/* 2 — Sous-titre (Poppins) */
+.hero-sub{
+  font-family:"Poppins",system-ui,sans-serif;
+  font-size:clamp(1.125rem,2.5vw,1.875rem);
+  font-weight:300;
+  color:hsl(var(--foreground) / 0.8);
+  margin-bottom:12px;
+}
+@media(min-width:768px){.hero-sub{margin-bottom:24px}}
+
+/* 3 — Description (Open Sans) */
+.hero-desc{
+  font-family:"Open Sans",system-ui,sans-serif;
+  font-size:clamp(0.875rem,1.5vw,1.25rem);
+  font-weight:300;
+  color:hsl(var(--muted-foreground));
+  margin-bottom:16px;
+  max-width:44rem;
+}
+@media(min-width:768px){.hero-desc{margin-bottom:32px}}
+
+/* 4 — Boutons CTA */
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;font-weight:600}
+.hero-ctas button{
+  pointer-events:auto; /* réactive les clics (parent en pointer-events:none) */
+  font-family:"League Spartan",system-ui,sans-serif;
+  font-size:0.875rem;
+  padding:12px 24px;
+  border:none;border-radius:var(--radius);
+  cursor:pointer;
+  transition:background-color 220ms cubic-bezier(0.22,1,0.36,1);
+}
+@media(min-width:768px){.hero-ctas button{padding:16px 32px}}
+.hero-ctas button:active{transform:translateY(1px)} /* press = translateY(1px) */
+
+.cta-primary{background:hsl(var(--primary));color:hsl(var(--primary-foreground))}
+.cta-primary:hover{background:hsl(var(--accent-hover))}
+.cta-secondary{background:hsl(var(--foreground));color:hsl(var(--background))}
+.cta-secondary:hover{background:hsl(var(--foreground) / 0.9)}
+
+/* 5 — Ligne de confiance */
+.hero-trust{
+  font-family:"Open Sans",system-ui,sans-serif;
+  font-size:0.75rem;font-weight:300;
+  color:hsl(var(--muted-foreground) / 0.6);
+  margin-top:16px;
+}
+@media(min-width:768px){.hero-trust{margin-top:24px}}
+
+/* Respect des préférences de mouvement réduit */
+@media(prefers-reduced-motion:reduce){
+  .animate-fade-up,.animate-fade-in{animation:none;opacity:1;filter:none;transform:none}
+}
+</style>
+</head>
+<body class="font-sans">
+
+<!-- Wrapper page (équivalent Index.tsx) -->
+<div style="background:hsl(var(--hero-bg));min-height:100vh">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <!-- Idéalement remplacer par le SVG logo_fond_sombre.svg ; le "A" porte le gold -->
+    <a href="#" class="nav-logo" aria-label="Ascenzia"><span class="mark">A</span>SCENZIA</a>
+
+    <div class="nav-links">
+      <a href="#solution">Solution</a>
+      <a href="#souverainete">Souveraineté</a>
+      <a href="#cas-d-usage">Cas d'usage</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <button type="button" class="nav-cta">Demander une démo</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- Fond 3D / fallback dégradé Ascenzia -->
+    <div class="hero-bg-3d" aria-hidden="true">
+      <div class="fallback"></div>
+      <div class="grid"></div>
+      <div class="glow-slate"></div>
+      <div class="glow-gold"></div>
+    </div>
+
+    <!-- Overlay sombre -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Contenu (bottom-left) -->
+    <div class="hero-content">
+      <h1 class="hero-title animate-fade-up" style="animation-delay:0.2s">
+        Ascenzia <span class="gold">Sentinel</span>
+      </h1>
+
+      <p class="hero-sub animate-fade-up" style="animation-delay:0.4s">
+        Reprenez le contrôle de vos agents IA.
+      </p>
+
+      <p class="hero-desc animate-fade-up" style="animation-delay:0.55s">
+        Une tour de contrôle unique pour superviser, sécuriser et auditer tous vos
+        agents IA. Hébergement souverain en France (SecNumCloud). Conformité AI Act
+        native. Vos données restent les vôtres.
+      </p>
+
+      <div class="hero-ctas animate-fade-up" style="animation-delay:0.7s">
+        <button type="button" class="cta-primary font-display">Demander une démo</button>
+        <button type="button" class="cta-secondary font-display">Voir la plateforme</button>
+      </div>
+
+      <p class="hero-trust animate-fade-up" style="animation-delay:0.85s">
+        Hébergement souverain France · SecNumCloud · Conformité AI Act
+      </p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
